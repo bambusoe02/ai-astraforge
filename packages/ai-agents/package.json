@@ -1,0 +1,34 @@
+{
+  "name": "@astraforge/ai-agents",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "ai": "^3.0.0",
+    "openai": "^4.28.0",
+    "langchain": "^0.2.0",
+    "@langchain/openai": "^0.0.28",
+    "@langchain/core": "^0.2.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@astraforge/eslint-config": "file:../eslint-config",
+    "@astraforge/tsconfig": "file:../tsconfig",
+    "@types/node": "^20.12.7",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.5"
+  }
+}

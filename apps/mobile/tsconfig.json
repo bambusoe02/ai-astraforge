@@ -1,0 +1,18 @@
+{
+  "extends": "@astraforge/tsconfig/react-native.json",
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "expo/AppEntry.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

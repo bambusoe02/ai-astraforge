@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstraForge AI Assistant</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <h1 class="title">🌌 AstraForge</h1>
+      <p class="subtitle">AI Assistant</p>
+    </header>
+
+    <div class="content">
+      <div class="repo-info" id="repoInfo">
+        <div class="repo-name">Loading repository...</div>
+        <div class="repo-stats"></div>
+      </div>
+
+      <div class="actions">
+        <button id="analyzeBtn" class="action-btn primary">
+          🔍 Analyze Repository
+        </button>
+        <button id="generateBtn" class="action-btn secondary">
+          ⚡ Generate Features
+        </button>
+        <button id="reviewBtn" class="action-btn secondary">
+          👁️ Code Review
+        </button>
+        <button id="deployBtn" class="action-btn secondary">
+          🚀 Deploy
+        </button>
+      </div>
+
+      <div class="chat-container" id="chatContainer">
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input">
+          <input
+            type="text"
+            id="messageInput"
+            placeholder="Ask AstraForge to help..."
+            autocomplete="off"
+          >
+          <button id="sendBtn">📤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

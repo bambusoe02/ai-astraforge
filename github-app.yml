@@ -1,0 +1,47 @@
+name: AstraForge AI Assistant
+description: AI-powered code generation and repository management
+homepage_url: https://astraforge.vercel.app
+
+# The name of the GitHub App
+name: AstraForge
+
+# The homepage of your GitHub App
+url: https://astraforge.vercel.app
+
+# The hook endpoint for webhooks
+hook_attributes:
+  url: https://astraforge-api.vercel.app/webhooks/github
+  active: true
+
+# The permissions your GitHub App requires
+permissions:
+  contents: read
+  issues: write
+  pull_requests: write
+  repository_projects: write
+  actions: read
+  checks: write
+  statuses: write
+  metadata: read
+  deployments: write
+
+# The events your GitHub App subscribes to
+events:
+  - push
+  - pull_request
+  - issues
+  - issue_comment
+  - pull_request_review
+  - pull_request_review_comment
+  - check_suite
+  - check_run
+  - deployment
+  - deployment_status
+  - repository
+  - release
+
+# Set to true when your GitHub App is available to the public
+public: false
+
+# Set to true to enable webhook event logging
+webhook_secret: "astraforge_webhook_secret_2024"

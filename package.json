@@ -1,0 +1,50 @@
+{
+  "name": "astraforge",
+  "version": "1.0.0",
+  "description": "AI-Powered Polyglot Monorepo Factory + Self-Healing System",
+  "private": true,
+  "packageManager": "npm@10.2.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "start": "turbo start",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "clean": "turbo clean && rm -rf node_modules",
+    "typecheck": "turbo typecheck",
+    "deploy": "turbo deploy",
+    "db:push": "turbo db:push",
+    "db:generate": "turbo db:generate",
+    "setup": "npm install && npm run db:setup",
+    "db:setup": "cd apps/api && alembic upgrade head",
+    "mobile": "cd apps/mobile && expo start",
+    "extension": "cd apps/extension && npm run build",
+    "ai:train": "cd packages/ai-agents && npm run train",
+    "docs": "npm run docs:build && npm run docs:serve",
+    "docs:build": "cd docs && npm run build",
+    "docs:serve": "cd docs && npm run serve"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.6",
+    "@types/node": "^20.12.7",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.5",
+    "@typescript-eslint/eslint-plugin": "^7.7.0",
+    "@typescript-eslint/parser": "^7.7.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "keywords": ["ai", "monorepo", "turborepo", "nextjs", "fastapi", "react-native", "ai-agents"],
+  "author": "Marcin Baran <bambusoe@gmail.com>",
+  "license": "MIT"
+}
