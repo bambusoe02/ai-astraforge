@@ -5,7 +5,9 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["src/**", "lib/**", "index.ts", "index.js", "package.json"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**", "build/**"]
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**", "build/**"],
+      "cache": true,
+      "env": ["NODE_ENV"]
     },
     "dev": {
       "cache": false,

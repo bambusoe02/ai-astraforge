@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd ../.. && npm install && npm run build --filter=web",
+  "buildCommand": "cd ../.. && npm install && npm run build:web",
   "outputDirectory": ".next",
   "framework": null,
   "installCommand": "cd ../.. && npm install",

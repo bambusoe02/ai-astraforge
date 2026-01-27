@@ -9,7 +9,8 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo build",
+    "build": "turbo build --filter=!@astraforge/mobile",
+    "build:web": "turbo build --filter=@astraforge/web",
     "dev": "turbo dev",
     "start": "turbo start",
     "lint": "turbo lint",

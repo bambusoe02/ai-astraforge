@@ -8,7 +8,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "build": "expo build",
+    "build": "echo 'Skipping mobile build for web deployment' && exit 0",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "typecheck": "tsc --noEmit"
   },
