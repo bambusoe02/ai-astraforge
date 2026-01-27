@@ -1,8 +1,9 @@
 {
   "buildCommand": "npx turbo build --filter=@astraforge/web",
-  "outputDirectory": "apps/web/.next",
+  "outputDirectory": ".next",
   "framework": "nextjs",
   "installCommand": "npm install",
   "devCommand": "npx turbo dev --filter=@astraforge/web",
-  "regions": ["iad1"]
+  "regions": ["iad1"],
+  "rootDirectory": "apps/web"
 }
