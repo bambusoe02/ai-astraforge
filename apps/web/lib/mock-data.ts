@@ -119,14 +119,18 @@ export const mockApi = {
     await simulateApiDelay(2000);
     return mockAgentActivity;
   },
-  sendMessage: async (message: string, agentType: string) => {
+  sendMessage: async (message: string, agentType?: string) => {
     await simulateApiDelay(2000);
-    return {
-      content: `Mock response from ${agentType} for: "${message}"`,
-      agent: agentType,
-      confidence: 0.9,
-      actions: [],
-    };
+    const agents = ["architect", "coder", "tester", "deployer", "monitor"];
+    const selectedAgent = agentType || agents[Math.floor(Math.random() * agents.length)];
+    
+    return [
+      {
+        message: `Mock response from ${selectedAgent} for: "${message}"`,
+        agent: selectedAgent,
+        timestamp: new Date(),
+      },
+    ];
   },
   generateCode: async (platform: string) => {
     await simulateApiDelay(2000);
