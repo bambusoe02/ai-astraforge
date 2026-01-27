@@ -62,11 +62,18 @@ export function TaskScreen() {
 }`
 };
 
-export const mockProjects = [
+export const mockProjects: Array<{
+  name: string;
+  platform: string;
+  status: "success" | "building" | "warning" | "failed";
+  lastBuild: string;
+  tests: number;
+  coverage: number;
+}> = [
   {
     name: "Web Dashboard",
     platform: "Next.js",
-    status: "success",
+    status: "success" as const,
     lastBuild: "2 minutes ago",
     tests: 95,
     coverage: 87,
@@ -74,7 +81,7 @@ export const mockProjects = [
   {
     name: "API Backend",
     platform: "FastAPI",
-    status: "building",
+    status: "building" as const,
     lastBuild: "Building...",
     tests: 92,
     coverage: 91,
@@ -82,7 +89,7 @@ export const mockProjects = [
   {
     name: "Mobile App",
     platform: "React Native",
-    status: "warning",
+    status: "warning" as const,
     lastBuild: "5 minutes ago",
     tests: 88,
     coverage: 82,
@@ -90,14 +97,19 @@ export const mockProjects = [
   {
     name: "Chrome Extension",
     platform: "Chrome",
-    status: "success",
+    status: "success" as const,
     lastBuild: "1 minute ago",
     tests: 96,
     coverage: 89,
   },
 ];
 
-export const mockAgentActivity = [
+export const mockAgentActivity: Array<{
+  agent: string;
+  message: string;
+  time: string;
+  status: string;
+}> = [
   { agent: "Architect", message: "System design completed", time: "2m ago", status: "success" },
   { agent: "Coder", message: "Generating API endpoints", time: "1m ago", status: "info" },
   { agent: "Tester", message: "Running integration tests", time: "30s ago", status: "info" },
