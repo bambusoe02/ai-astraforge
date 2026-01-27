@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
-import { ClerkProvider } from "@clerk/nextjs";
 
 import { cn } from "@astraforge/ui";
 import "../styles/globals.css";
@@ -13,11 +12,21 @@ export const metadata: Metadata = {
   description: "Build full-stack applications across platforms with AI agents",
 };
 
-// Check if Clerk keys are available
+// Check if Clerk keys are available (only at runtime, not build time)
 const hasClerkKeys = !!(
   process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY &&
   process.env.CLERK_SECRET_KEY
 );
+
+// Dynamic import for ClerkProvider to avoid build errors
+let ClerkProvider: any = null;
+if (hasClerkKeys) {
+  try {
+    ClerkProvider = require("@clerk/nextjs").ClerkProvider;
+  } catch (e) {
+    // Clerk not available, continue without it
+  }
+}
 
 export default function RootLayout({
   children,
@@ -38,8 +47,8 @@ export default function RootLayout({
     </>
   );
 
-  // Only wrap with ClerkProvider if keys are available
-  if (hasClerkKeys) {
+  // Only wrap with ClerkProvider if keys are available and component loaded
+  if (hasClerkKeys && ClerkProvider) {
     return (
       <ClerkProvider>
         <html lang="en" className="dark">
