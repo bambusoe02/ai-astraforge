@@ -7,7 +7,7 @@
       "inputs": ["src/**", "lib/**", "index.ts", "index.js", "package.json"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**", "build/**"],
       "cache": true,
-      "env": ["NODE_ENV"]
+      "env": ["NODE_ENV", "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY", "CLERK_SECRET_KEY", "ANTHROPIC_API_KEY", "DATABASE_URL"]
     },
     "dev": {
       "cache": false,
