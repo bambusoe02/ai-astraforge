@@ -1,29 +1,8 @@
 {
-  "functions": {
-    "apps/web/app/api/**/*.ts": {
-      "runtime": "@vercel/node"
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/apps/web/$1"
-    }
-  ],
-  "buildCommand": "turbo run build --filter=web",
-  "outputDirectory": "apps/web/.next",
-  "framework": "nextjs",
-  "regions": ["iad1"],
-  "env": {
-    "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY": "@clerk-publishable-key",
-    "CLERK_SECRET_KEY": "@clerk-secret-key",
-    "STRIPE_PUBLISHABLE_KEY": "@stripe-publishable-key",
-    "STRIPE_SECRET_KEY": "@stripe-secret-key",
-    "DATABASE_URL": "@database-url",
-    "OPENAI_API_KEY": "@openai-api-key"
-  }
+  "buildCommand": "cd ../.. && npm install && npm run build --filter=web",
+  "outputDirectory": ".next",
+  "framework": null,
+  "installCommand": "cd ../.. && npm install",
+  "devCommand": "cd ../.. && npm run dev --filter=web",
+  "regions": ["iad1"]
 }
