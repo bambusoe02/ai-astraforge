@@ -1,8 +1,8 @@
 {
-  "buildCommand": "cd ../.. && npm install && npm run build:web",
-  "outputDirectory": ".next",
+  "buildCommand": "npm run build:web",
+  "outputDirectory": "apps/web/.next",
   "framework": null,
-  "installCommand": "cd ../.. && npm install",
-  "devCommand": "cd ../.. && npm run dev --filter=web",
+  "installCommand": "npm install",
+  "devCommand": "npm run dev --filter=web",
   "regions": ["iad1"]
 }
