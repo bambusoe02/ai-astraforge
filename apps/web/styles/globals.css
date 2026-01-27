@@ -29,11 +29,6 @@
 }
 
 @layer utilities {
-  .backdrop-blur-xl {
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-  }
-
   .scale-102 {
     transform: scale(1.02);
   }
