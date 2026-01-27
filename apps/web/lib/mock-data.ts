@@ -1,11 +1,11 @@
 // lib/mock-data.ts
-export const mockAgentStatus = {
-  architect: { status: 'active', message: 'Analyzing requirements...' },
-  coder: { status: 'busy', message: 'Generating code...' },
-  tester: { status: 'idle', message: 'Waiting for code...' },
-  deployer: { status: 'idle', message: 'Ready to deploy' },
-  monitor: { status: 'active', message: 'System healthy' },
-  security: { status: 'idle', message: 'Scanning...' }
+export const mockAgentStatus: Record<string, { status: 'active' | 'busy' | 'idle'; message: string }> = {
+  architect: { status: 'active' as const, message: 'Analyzing requirements...' },
+  coder: { status: 'busy' as const, message: 'Generating code...' },
+  tester: { status: 'idle' as const, message: 'Waiting for code...' },
+  deployer: { status: 'idle' as const, message: 'Ready to deploy' },
+  monitor: { status: 'active' as const, message: 'System healthy' },
+  security: { status: 'idle' as const, message: 'Scanning...' }
 };
 
 export const mockGeneratedCode = {
