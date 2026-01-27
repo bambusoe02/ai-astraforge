@@ -1,8 +1,8 @@
 {
-  "buildCommand": "npm run build:web",
+  "buildCommand": "npx turbo build --filter=@astraforge/web",
   "outputDirectory": "apps/web/.next",
   "framework": null,
   "installCommand": "npm install",
-  "devCommand": "npm run dev --filter=web",
+  "devCommand": "npx turbo dev --filter=@astraforge/web",
   "regions": ["iad1"]
 }
