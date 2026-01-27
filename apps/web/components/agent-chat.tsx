@@ -1,9 +1,6 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-// Temporarily using basic HTML elements for deployment
-// import { Button, Card, CardContent, CardHeader, CardTitle } from "@astraforge/ui";
-// import { Send, Bot, User, Code, TestTube, Rocket, Monitor } from "lucide-react";
 
 interface Message {
   id: string;
@@ -19,16 +16,9 @@ export function AgentChat() {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Temporarily disabled scrolling for deployment
-  // const scrollToBottom = () => {
-  //   if (messagesEndRef.current) {
-  //     messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   scrollToBottom();
-  // }, [messages]);
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -44,12 +34,10 @@ export function AgentChat() {
     setInput("");
     setIsLoading(true);
 
-    // Use mock API with delay
     try {
       const { mockApi } = await import("../lib/mock-data");
       const responses = await mockApi.sendMessage(input);
 
-      // Add responses with staggered timing for realism
       responses.forEach((response, index) => {
         setTimeout(() => {
           const agentMessage: Message = {
@@ -60,8 +48,6 @@ export function AgentChat() {
             timestamp: response.timestamp,
           };
           setMessages((prev) => [...prev, agentMessage]);
-          
-          // Set loading to false after last message
           if (index === responses.length - 1) {
             setIsLoading(false);
           }
@@ -73,99 +59,132 @@ export function AgentChat() {
     }
   };
 
+  const getAgentGradient = (agent?: string) => {
+    const gradients: Record<string, string> = {
+      architect: "from-purple-500 to-pink-500",
+      coder: "from-blue-500 to-cyan-500",
+      tester: "from-green-500 to-emerald-500",
+      deployer: "from-orange-500 to-red-500",
+      monitor: "from-indigo-500 to-purple-500",
+    };
+    return gradients[agent || ""] || "from-gray-500 to-gray-600";
+  };
+
   const getAgentIcon = (agent?: string) => {
-    switch (agent) {
-      case "architect":
-        return "🏗️";
-      case "coder":
-        return "💻";
-      case "tester":
-        return "🧪";
-      case "deployer":
-        return "🚀";
-      case "monitor":
-        return "📊";
-      default:
-        return "🤖";
-    }
+    const icons: Record<string, string> = {
+      architect: "🏗️",
+      coder: "💻",
+      tester: "🧪",
+      deployer: "🚀",
+      monitor: "📊",
+    };
+    return icons[agent || ""] || "🤖";
   };
 
   return (
-    <div className="h-full bg-slate-800 border border-slate-700 rounded-lg">
-      <div className="p-6 border-b border-slate-700">
-        <h2 className="flex items-center gap-2 text-white text-xl font-semibold">
-          🤖 AI Agent Chat
-        </h2>
+    <div className="h-full flex flex-col bg-gradient-to-br from-slate-900/50 to-slate-800/50">
+      {/* Header */}
+      <div className="p-6 border-b border-white/10 backdrop-blur-sm bg-white/5">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+            <span className="text-xl">🤖</span>
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-white">AI Agent Chat</h2>
+            <p className="text-sm text-slate-400">Chat with specialized AI agents</p>
+          </div>
+        </div>
       </div>
-      <div className="flex flex-col h-[calc(100%-5rem)] p-6">
-        {/* Messages */}
-        <div className="flex-1 overflow-y-auto space-y-4 mb-4">
-          {messages.map((message) => (
+
+      {/* Messages */}
+      <div className="flex-1 overflow-y-auto p-6 space-y-4">
+        {messages.length === 0 && (
+          <div className="flex items-center justify-center h-full">
+            <div className="text-center">
+              <div className="w-20 h-20 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <span className="text-4xl">💬</span>
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-2">Start a conversation</h3>
+              <p className="text-slate-400">Describe what you want to build</p>
+            </div>
+          </div>
+        )}
+
+        {messages.map((message) => (
+          <div
+            key={message.id}
+            className={`flex gap-4 ${
+              message.role === "user" ? "justify-end" : "justify-start"
+            }`}
+          >
+            {message.role === "agent" && (
+              <div className={`w-10 h-10 bg-gradient-to-br ${getAgentGradient(message.agent)} rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg`}>
+                <span className="text-lg">{getAgentIcon(message.agent)}</span>
+              </div>
+            )}
+
             <div
-              key={message.id}
-              className={`flex gap-3 ${
-                message.role === "user" ? "justify-end" : "justify-start"
+              className={`max-w-[70%] rounded-2xl px-4 py-3 backdrop-blur-sm ${
+                message.role === "user"
+                  ? "bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/50"
+                  : "bg-white/10 text-slate-200 border border-white/10"
               }`}
             >
-              {message.role === "agent" && (
-                <div className="flex-shrink-0 w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
-                  {getAgentIcon(message.agent)}
+              {message.agent && (
+                <div className="text-xs font-semibold text-purple-300 mb-1 capitalize">
+                  {message.agent}
                 </div>
               )}
-              <div
-                className={`max-w-[70%] rounded-lg px-4 py-2 ${
-                  message.role === "user"
-                    ? "bg-purple-600 text-white"
-                    : "bg-slate-700 text-slate-200"
-                }`}
-              >
-                {message.agent && (
-                  <div className="text-xs text-purple-300 mb-1 capitalize">
-                    {message.agent}
-                  </div>
-                )}
-                {message.content}
-              </div>
-              {message.role === "user" && (
-                <div className="flex-shrink-0 w-8 h-8 bg-slate-600 rounded-full flex items-center justify-center">
-                  👤
-                </div>
-              )}
+              <p className="text-sm leading-relaxed">{message.content}</p>
             </div>
-          ))}
-          {isLoading && (
-            <div className="flex gap-3 justify-start">
-              <div className="flex-shrink-0 w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
-                🤖
-              </div>
-              <div className="bg-slate-700 text-slate-200 rounded-lg px-4 py-2">
-                <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
-                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
-                </div>
-              </div>
-            </div>
-          )}
-          <div ref={messagesEndRef} />
-        </div>
 
-        {/* Input */}
-        <div className="flex gap-2">
+            {message.role === "user" && (
+              <div className="w-10 h-10 bg-gradient-to-br from-slate-600 to-slate-700 rounded-xl flex items-center justify-center flex-shrink-0">
+                <span className="text-lg">👤</span>
+              </div>
+            )}
+          </div>
+        ))}
+
+        {isLoading && (
+          <div className="flex gap-4 justify-start">
+            <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+              <span className="text-lg">🤖</span>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-3 border border-white/10">
+              <div className="flex space-x-2">
+                {[0, 1, 2].map((i) => (
+                  <div
+                    key={i}
+                    className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"
+                    style={{ animationDelay: `${i * 0.1}s` }}
+                  ></div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Input */}
+      <div className="p-6 border-t border-white/10 backdrop-blur-sm bg-white/5">
+        <div className="flex gap-3">
           <input
             type="text"
             value={input}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInput((e.target as HTMLInputElement).value)}
-            onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && sendMessage()}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyPress={(e) => e.key === "Enter" && !e.shiftKey && sendMessage()}
             placeholder="Describe what you want to build..."
-            className="flex-1 bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="flex-1 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
           />
           <button
             onClick={sendMessage}
             disabled={isLoading || !input.trim()}
-            className="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-white disabled:opacity-50"
+            className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-purple-500/50 transition-all transform hover:scale-105"
           >
-            📤
+            {isLoading ? "⏳" : "📤"}
           </button>
         </div>
       </div>
