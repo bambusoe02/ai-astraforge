@@ -11,12 +11,10 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-# CORS - use settings from config
-from app.core.config import settings
-
+# CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins,
+    allow_origins=["http://localhost:3000", "https://astraforge.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

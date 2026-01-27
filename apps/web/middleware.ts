@@ -1,26 +1,21 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+// Check if Clerk keys are available
+const hasClerkKeys = !!(
+  process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY &&
+  process.env.CLERK_SECRET_KEY
+);
+
 export function middleware(request: NextRequest) {
-  // Security headers
-  const response = NextResponse.next();
-
-  // Add security headers
-  response.headers.set("X-DNS-Prefetch-Control", "on");
-  response.headers.set("X-Frame-Options", "SAMEORIGIN");
-  response.headers.set("X-Content-Type-Options", "nosniff");
-  response.headers.set("X-XSS-Protection", "1; mode=block");
-  response.headers.set("Referrer-Policy", "origin-when-cross-origin");
-
-  // Only add HSTS in production
-  if (process.env.NODE_ENV === "production") {
-    response.headers.set(
-      "Strict-Transport-Security",
-      "max-age=63072000; includeSubDomains; preload"
-    );
+  // If Clerk is not configured, skip authentication middleware
+  if (!hasClerkKeys) {
+    return NextResponse.next();
   }
 
-  return response;
+  // If Clerk is configured, you can add authentication logic here
+  // For now, just pass through
+  return NextResponse.next();
 }
 
 export const config = {

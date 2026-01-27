@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 // import { Badge } from "@astraforge/ui";
 // import { Brain, Code, TestTube, Rocket, Monitor } from "lucide-react";
 
@@ -10,44 +11,23 @@ interface Agent {
   description: string;
 }
 
-const agents: Agent[] = [
-  {
-    name: "Architect",
-    status: "active",
-    icon: "🏗️",
-    description: "Designs system architecture",
-  },
-  {
-    name: "Coder",
-    status: "busy",
-    icon: "💻",
-    description: "Generates cross-platform code",
-  },
-  {
-    name: "Tester",
-    status: "idle",
-    icon: "🧪",
-    description: "Runs automated tests",
-  },
-  {
-    name: "Deployer",
-    status: "idle",
-    icon: "🚀",
-    description: "Handles deployments",
-  },
-  {
-    name: "Monitor",
-    status: "active",
-    icon: "📊",
-    description: "System health monitoring",
-  },
-  {
-    name: "Security",
-    status: "idle",
-    icon: "🔒",
-    description: "Security analysis & auditing",
-  },
-];
+const agentIcons: Record<string, string> = {
+  architect: "🏗️",
+  coder: "💻",
+  tester: "🧪",
+  deployer: "🚀",
+  monitor: "📊",
+  security: "🔒",
+};
+
+const agentDescriptions: Record<string, string> = {
+  architect: "Designs system architecture",
+  coder: "Generates cross-platform code",
+  tester: "Runs automated tests",
+  deployer: "Handles deployments",
+  monitor: "System health monitoring",
+  security: "Security analysis & auditing",
+};
 
 const getStatusColor = (status: string) => {
   switch (status) {
@@ -63,6 +43,52 @@ const getStatusColor = (status: string) => {
 };
 
 export function AgentStatus() {
+  const [agents, setAgents] = useState<Agent[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadAgentStatus = async () => {
+      try {
+        const { mockApi } = await import("../lib/mock-data");
+        const statusData = await mockApi.getAgentStatus();
+        
+        const agentsList: Agent[] = Object.entries(statusData).map(([key, status]) => ({
+          name: key.charAt(0).toUpperCase() + key.slice(1),
+          status: status.status,
+          icon: agentIcons[key] || "🤖",
+          description: status.message,
+        }));
+        
+        setAgents(agentsList);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error loading agent status:", error);
+        setIsLoading(false);
+      }
+    };
+
+    loadAgentStatus();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="mt-auto">
+        <h3 className="text-sm font-semibold text-slate-300 mb-3">AI Agents</h3>
+        <div className="space-y-2">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div key={i} className="flex items-center gap-2 p-2 rounded-lg bg-slate-700 animate-pulse">
+              <div className="w-6 h-6 bg-slate-600 rounded"></div>
+              <div className="flex-1">
+                <div className="h-4 bg-slate-600 rounded w-20 mb-1"></div>
+                <div className="h-3 bg-slate-600 rounded w-32"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-auto">
       <h3 className="text-sm font-semibold text-slate-300 mb-3">AI Agents</h3>

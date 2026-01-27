@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 // import { Card, CardContent, CardHeader, CardTitle } from "@astraforge/ui";
 // import { Button } from "@astraforge/ui";
@@ -18,14 +18,32 @@ helloWorld();`);
 
   const [language, setLanguage] = useState("javascript");
   const [theme, setTheme] = useState("vs-dark");
+  const [platform, setPlatform] = useState("nextjs");
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const handleGenerateCode = async () => {
+    setIsGenerating(true);
+    try {
+      const { mockApi } = await import("../lib/mock-data");
+      const generatedCode = await mockApi.generateCode(platform);
+      setCode(generatedCode.code);
+      setLanguage(generatedCode.language);
+    } catch (error) {
+      console.error("Error generating code:", error);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   const handleRun = () => {
     // Simulate running code
     console.log("Running code:", code);
   };
 
-  const handleSave = () => {
-    // Simulate saving code
+  const handleSave = async () => {
+    // Simulate saving code with delay
+      const { simulateApiDelay } = await import("../lib/mock-data");
+    await simulateApiDelay(500);
     console.log("Saving code:", code);
   };
 
@@ -48,6 +66,22 @@ helloWorld();`);
           <div className="text-white flex items-center justify-between">
             <span className="text-xl font-semibold">Multi-Platform Code Editor</span>
             <div className="flex gap-2">
+              <select
+                value={platform}
+                onChange={(e) => setPlatform(e.target.value)}
+                className="bg-slate-700 border border-slate-600 rounded px-3 py-1 text-sm text-white"
+              >
+                <option value="nextjs">Next.js</option>
+                <option value="fastapi">FastAPI</option>
+                <option value="mobile">React Native</option>
+              </select>
+              <button 
+                onClick={handleGenerateCode}
+                disabled={isGenerating}
+                className="bg-purple-600 hover:bg-purple-700 px-3 py-1 rounded text-sm text-white flex items-center disabled:opacity-50"
+              >
+                {isGenerating ? "⏳ Generating..." : "✨ Generate Code"}
+              </button>
               <select
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}

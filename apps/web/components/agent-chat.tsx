@@ -44,32 +44,33 @@ export function AgentChat() {
     setInput("");
     setIsLoading(true);
 
-    // Simulate agent responses
-    setTimeout(() => {
-      const agents = ["architect", "coder", "tester", "deployer", "monitor"] as const;
-      const agentMessages = [
-        "Designing system architecture...",
-        "Generating code across platforms...",
-        "Running comprehensive tests...",
-        "Deploying to production...",
-        "Monitoring system health...",
-      ];
+    // Use mock API with delay
+    try {
+      const { mockApi } = await import("../lib/mock-data");
+      const responses = await mockApi.sendMessage(input);
 
-      agents.forEach((agent, index) => {
+      // Add responses with staggered timing for realism
+      responses.forEach((response, index) => {
         setTimeout(() => {
           const agentMessage: Message = {
-            id: `${Date.now()}-${agent}`,
+            id: `${Date.now()}-${response.agent}-${index}`,
             role: "agent",
-            content: agentMessages[index],
-            agent,
-            timestamp: new Date(),
+            content: response.message,
+            agent: response.agent as "architect" | "coder" | "tester" | "deployer" | "monitor",
+            timestamp: response.timestamp,
           };
           setMessages((prev) => [...prev, agentMessage]);
+          
+          // Set loading to false after last message
+          if (index === responses.length - 1) {
+            setIsLoading(false);
+          }
         }, (index + 1) * 1000);
       });
-
+    } catch (error) {
+      console.error("Error sending message:", error);
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const getAgentIcon = (agent?: string) => {
