@@ -21,15 +21,7 @@
 
 **AstraForge** is the world's first AI-powered monorepo factory that generates production-ready applications across **4 platforms simultaneously** using natural language. Describe what you want to build, and our 5 specialized AI agents handle everything from architecture design to deployment.
 
-### 🚀 4-Minute Demo
-
-https://github.com/astraforge/monorepo/assets/demo.mp4
-
-> *"Build user auth + payments"* → 4min → working across all platforms
-
----
-
-## 🏗️ Architecture Overview
+### 🏗️ Architecture Overview
 
 ```
 monorepo/
