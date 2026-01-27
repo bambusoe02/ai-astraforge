@@ -40,7 +40,7 @@ export default function RootLayout({
   // Demo mode without authentication (Clerk disabled for demo)
   return (
     <html lang="en" className="dark">
-      <body className={cn(inter.className, "min-h-screen bg-background")}>
+      <body className={cn(inter.className)}>
         {content}
       </body>
     </html>

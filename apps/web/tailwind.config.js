@@ -8,21 +8,42 @@ module.exports = {
     "../../packages/ui/src/**/*.{js,ts,jsx,tsx}",
   ],
   safelist: [
+    // Glassmorphism
     'backdrop-blur-xl',
     'bg-white/5',
     'bg-white/10',
     'border-white/10',
     'border-white/20',
+    // Gradients
     'from-purple-500',
     'to-pink-500',
     'from-blue-500',
     'to-cyan-500',
     'from-green-500',
     'to-emerald-500',
+    'from-purple-400',
+    'via-pink-400',
+    'to-orange-400',
+    'from-purple-950/20',
+    'to-slate-950',
+    'via-purple-950/20',
     'bg-gradient-to-r',
     'bg-gradient-to-br',
+    // Background colors
+    'bg-slate-950',
+    'bg-purple-500/30',
+    'bg-pink-500/30',
+    // Effects
     'scale-105',
     'scale-102',
+    'shadow-purple-500/50',
+    'shadow-lg',
+    'shadow-2xl',
+    'blur-3xl',
+    'blur-xl',
+    // Text
+    'bg-clip-text',
+    'text-transparent',
   ],
   theme: {
     container: {
