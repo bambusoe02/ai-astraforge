@@ -43,13 +43,21 @@ export function Dashboard() {
 
           {/* Navigation */}
           <nav className="flex-1 space-y-2">
-            {navItems.map((item) => (
+            {navItems.map((item) => {
+              const isActive = activeView === item.id;
+              const gradientClass = isActive 
+                ? item.gradient === "from-purple-500 to-pink-500" ? "bg-gradient-to-r from-purple-500 to-pink-500"
+                : item.gradient === "from-blue-500 to-cyan-500" ? "bg-gradient-to-r from-blue-500 to-cyan-500"
+                : "bg-gradient-to-r from-green-500 to-emerald-500"
+                : "";
+              
+              return (
               <button
                 key={item.id}
                 onClick={() => setActiveView(item.id as any)}
                 className={`group relative w-full text-left px-4 py-3 rounded-xl transition-all duration-300 ${
-                  activeView === item.id
-                    ? "bg-gradient-to-r " + item.gradient + " text-white shadow-lg shadow-purple-500/50 scale-105"
+                  isActive
+                    ? `${gradientClass} text-white shadow-lg shadow-purple-500/50 scale-105`
                     : "text-slate-300 hover:bg-white/5 hover:scale-102"
                 }`}
               >
@@ -57,11 +65,12 @@ export function Dashboard() {
                   <span className="text-xl">{item.icon}</span>
                   <span className="font-medium">{item.label}</span>
                 </div>
-                {activeView === item.id && (
+                {isActive && (
                   <div className="absolute inset-0 rounded-xl bg-white/10 blur-xl"></div>
                 )}
               </button>
-            ))}
+              );
+            })}
           </nav>
 
           {/* Agent Status */}

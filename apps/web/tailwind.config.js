@@ -7,6 +7,23 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "../../packages/ui/src/**/*.{js,ts,jsx,tsx}",
   ],
+  safelist: [
+    'backdrop-blur-xl',
+    'bg-white/5',
+    'bg-white/10',
+    'border-white/10',
+    'border-white/20',
+    'from-purple-500',
+    'to-pink-500',
+    'from-blue-500',
+    'to-cyan-500',
+    'from-green-500',
+    'to-emerald-500',
+    'bg-gradient-to-r',
+    'bg-gradient-to-br',
+    'scale-105',
+    'scale-102',
+  ],
   theme: {
     container: {
       center: true,
