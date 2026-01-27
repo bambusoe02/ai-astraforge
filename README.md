@@ -106,6 +106,38 @@ Monitor: "All systems operational, 99.9% uptime..."
 
 ---
 
+## ⚙️ Environment Setup
+
+### Environment Variables
+
+AstraForge uses environment variables for configuration. Copy the appropriate example file and customize it:
+
+#### For Local Development:
+```bash
+cp env.local.example .env.local
+# Edit .env.local with your local values
+```
+
+#### For Production:
+```bash
+cp env.production.example .env.production
+# Edit .env.production with your production values
+```
+
+**⚠️ Security Note:** Never commit actual `.env*` files to version control. Only commit the `.example` files.
+
+### Required Variables:
+
+- `OPENAI_API_KEY` - Required for AI agents functionality
+- `DATABASE_URL` - PostgreSQL connection string
+- `REDIS_URL` - Redis connection string (optional)
+
+### Optional Variables:
+
+- Clerk authentication keys for user management
+- Stripe keys for payment processing
+- GitHub App credentials for repository integration
+
 ## 🛠️ Quick Start
 
 ### Prerequisites
@@ -359,7 +391,8 @@ npm run dev
 **Marcin Baran** ([@bambusoe02](https://github.com/bambusoe02))
 - Email: bambusoe@gmail.com
 - GitHub: [https://github.com/bambusoe02](https://github.com/bambusoe02)
-- Repository: [https://github.com/bambusoe02/ai-astraforage](https://github.com/bambusoe02/ai-astraforage)
+- Repository: [https://github.com/bambusoe02/
+ai-astraforage](https://github.com/bambusoe02/ai-astraforage)
 
 ---
 
@@ -367,15 +400,6 @@ npm run dev
 
 **AstraForge** is open source software licensed under the [MIT License](LICENSE).
 
----
-
-## 🆘 Support & Community
-
-- 📖 [Documentation](https://docs.astraforge.ai)
-- 💬 [Discord Community](https://discord.gg/astraforge)
-- 🐛 [Issue Tracker](https://github.com/astraforge/monorepo/issues)
-- 📧 [Email Support](mailto:support@astraforge.ai)
-- 📰 [Blog & Updates](https://blog.astraforge.ai)
 
 ---
 

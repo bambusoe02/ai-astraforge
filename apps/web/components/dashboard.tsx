@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { UserButton } from "@clerk/nextjs";
 import { Card, CardContent, CardHeader, CardTitle } from "@astraforge/ui";
 import { AgentChat } from "./agent-chat";
 import { CodeEditor } from "./code-editor";
@@ -17,7 +16,9 @@ export function Dashboard() {
       <div className="w-64 bg-slate-800 p-6 flex flex-col">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-xl font-bold">AstraForge</h1>
-          <UserButton afterSignOutUrl="/" />
+          <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center">
+            <span className="text-white text-lg">👤</span>
+          </div>
         </div>
 
         <nav className="space-y-2 flex-1">

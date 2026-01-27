@@ -4,6 +4,7 @@ import { CoderAgent } from "./agents/coder-agent";
 import { TesterAgent } from "./agents/tester-agent";
 import { DeployerAgent } from "./agents/deployer-agent";
 import { MonitorAgent } from "./agents/monitor-agent";
+import { SecurityAgent } from "./agents/security-agent";
 
 export class AgentOrchestrator {
   private agents: Map<AgentType, any>;
@@ -21,6 +22,7 @@ export class AgentOrchestrator {
     this.agents.set("tester", new TesterAgent(this.apiKey));
     this.agents.set("deployer", new DeployerAgent(this.apiKey));
     this.agents.set("monitor", new MonitorAgent(this.apiKey));
+    this.agents.set("security", new SecurityAgent(this.apiKey));
   }
 
   async processWithAgent(
@@ -78,7 +80,16 @@ export class AgentOrchestrator {
     );
     responses.push(deployerResponse);
 
-    // 5. Monitor provides health check
+    // 5. Security provides security analysis
+    console.log("🔒 Running Security Agent...");
+    const securityResponse = await this.processWithAgent(
+      "security",
+      "Analyze code for security vulnerabilities",
+      context
+    );
+    responses.push(securityResponse);
+
+    // 6. Monitor provides health check
     console.log("📊 Running Monitor Agent...");
     const monitorResponse = await this.processWithAgent(
       "monitor",

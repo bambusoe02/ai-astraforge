@@ -22,6 +22,7 @@
     "db:generate": "turbo db:generate",
     "setup": "npm install && npm run db:setup",
     "db:setup": "cd apps/api && alembic upgrade head",
+    "env:setup": "./setup-env.sh",
     "mobile": "cd apps/mobile && expo start",
     "extension": "cd apps/extension && npm run build",
     "ai:train": "cd packages/ai-agents && npm run train",

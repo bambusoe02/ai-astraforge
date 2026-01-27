@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { Button, Card, CardContent, CardHeader, CardTitle } from "@astraforge/ui";
-import { Send, Bot, User, Code, TestTube, Rocket, Monitor } from "lucide-react";
+import React, { useState, useRef, useEffect } from "react";
+// Temporarily using basic HTML elements for deployment
+// import { Button, Card, CardContent, CardHeader, CardTitle } from "@astraforge/ui";
+// import { Send, Bot, User, Code, TestTube, Rocket, Monitor } from "lucide-react";
 
 interface Message {
   id: string;
@@ -18,13 +19,16 @@ export function AgentChat() {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  // Temporarily disabled scrolling for deployment
+  // const scrollToBottom = () => {
+  //   if (messagesEndRef.current) {
+  //     messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
+  //   }
+  // };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+  // useEffect(() => {
+  //   scrollToBottom();
+  // }, [messages]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -71,29 +75,28 @@ export function AgentChat() {
   const getAgentIcon = (agent?: string) => {
     switch (agent) {
       case "architect":
-        return <Code className="w-4 h-4" />;
+        return "🏗️";
       case "coder":
-        return <Bot className="w-4 h-4" />;
+        return "💻";
       case "tester":
-        return <TestTube className="w-4 h-4" />;
+        return "🧪";
       case "deployer":
-        return <Rocket className="w-4 h-4" />;
+        return "🚀";
       case "monitor":
-        return <Monitor className="w-4 h-4" />;
+        return "📊";
       default:
-        return <Bot className="w-4 h-4" />;
+        return "🤖";
     }
   };
 
   return (
-    <Card className="h-full bg-slate-800 border-slate-700">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-white">
-          <Bot className="w-5 h-5" />
-          AI Agent Chat
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="flex flex-col h-[calc(100%-5rem)]">
+    <div className="h-full bg-slate-800 border border-slate-700 rounded-lg">
+      <div className="p-6 border-b border-slate-700">
+        <h2 className="flex items-center gap-2 text-white text-xl font-semibold">
+          🤖 AI Agent Chat
+        </h2>
+      </div>
+      <div className="flex flex-col h-[calc(100%-5rem)] p-6">
         {/* Messages */}
         <div className="flex-1 overflow-y-auto space-y-4 mb-4">
           {messages.map((message) => (
@@ -124,7 +127,7 @@ export function AgentChat() {
               </div>
               {message.role === "user" && (
                 <div className="flex-shrink-0 w-8 h-8 bg-slate-600 rounded-full flex items-center justify-center">
-                  <User className="w-4 h-4" />
+                  👤
                 </div>
               )}
             </div>
@@ -132,7 +135,7 @@ export function AgentChat() {
           {isLoading && (
             <div className="flex gap-3 justify-start">
               <div className="flex-shrink-0 w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
-                <Bot className="w-4 h-4" />
+                🤖
               </div>
               <div className="bg-slate-700 text-slate-200 rounded-lg px-4 py-2">
                 <div className="flex space-x-1">
@@ -151,20 +154,20 @@ export function AgentChat() {
           <input
             type="text"
             value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && sendMessage()}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInput((e.target as HTMLInputElement).value)}
+            onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && sendMessage()}
             placeholder="Describe what you want to build..."
             className="flex-1 bg-slate-700 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
-          <Button
+          <button
             onClick={sendMessage}
             disabled={isLoading || !input.trim()}
-            className="bg-purple-600 hover:bg-purple-700"
+            className="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-white disabled:opacity-50"
           >
-            <Send className="w-4 h-4" />
-          </Button>
+            📤
+          </button>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

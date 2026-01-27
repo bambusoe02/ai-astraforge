@@ -19,7 +19,7 @@ export interface AgentAction {
   description: string;
 }
 
-export type AgentType = "architect" | "coder" | "tester" | "deployer" | "monitor";
+export type AgentType = "architect" | "coder" | "tester" | "deployer" | "monitor" | "security";
 
 export interface ProjectContext {
   id: number;

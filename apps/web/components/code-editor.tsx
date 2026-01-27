@@ -2,9 +2,9 @@
 
 import { useState, useRef } from "react";
 import Editor from "@monaco-editor/react";
-import { Card, CardContent, CardHeader, CardTitle } from "@astraforge/ui";
-import { Button } from "@astraforge/ui";
-import { Play, Save, Download } from "lucide-react";
+// import { Card, CardContent, CardHeader, CardTitle } from "@astraforge/ui";
+// import { Button } from "@astraforge/ui";
+// import { Play, Save, Download } from "lucide-react";
 
 export function CodeEditor() {
   const [code, setCode] = useState(`// Welcome to AstraForge Code Editor
@@ -43,10 +43,10 @@ helloWorld();`);
 
   return (
     <div className="h-full space-y-4">
-      <Card className="bg-slate-800 border-slate-700">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center justify-between">
-            <span>Multi-Platform Code Editor</span>
+      <div className="bg-slate-800 border border-slate-700 rounded-lg">
+        <div className="p-6 border-b border-slate-700">
+          <div className="text-white flex items-center justify-between">
+            <span className="text-xl font-semibold">Multi-Platform Code Editor</span>
             <div className="flex gap-2">
               <select
                 value={language}
@@ -60,22 +60,19 @@ helloWorld();`);
                 <option value="go">Go</option>
                 <option value="java">Java</option>
               </select>
-              <Button onClick={handleRun} size="sm" className="bg-green-600 hover:bg-green-700">
-                <Play className="w-4 h-4 mr-1" />
-                Run
-              </Button>
-              <Button onClick={handleSave} size="sm" variant="outline">
-                <Save className="w-4 h-4 mr-1" />
-                Save
-              </Button>
-              <Button onClick={handleDownload} size="sm" variant="outline">
-                <Download className="w-4 h-4 mr-1" />
-                Download
-              </Button>
+              <button onClick={handleRun} className="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-sm text-white flex items-center">
+                ▶️ Run
+              </button>
+              <button onClick={handleSave} className="bg-slate-700 border border-slate-600 px-3 py-1 rounded text-sm text-white flex items-center">
+                💾 Save
+              </button>
+              <button onClick={handleDownload} className="bg-slate-700 border border-slate-600 px-3 py-1 rounded text-sm text-white flex items-center">
+                📥 Download
+              </button>
             </div>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
+          </div>
+        </div>
+        <div className="p-6">
           <div className="h-96 border border-slate-600 rounded-lg overflow-hidden">
             <Editor
               height="100%"
@@ -96,15 +93,15 @@ helloWorld();`);
               }}
             />
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* File Explorer */}
-      <Card className="bg-slate-800 border-slate-700">
-        <CardHeader>
-          <CardTitle className="text-white">Project Files</CardTitle>
-        </CardHeader>
-        <CardContent>
+      <div className="bg-slate-800 border border-slate-700 rounded-lg">
+        <div className="p-6 border-b border-slate-700">
+          <h2 className="text-white text-xl font-semibold">Project Files</h2>
+        </div>
+        <div className="p-6">
           <div className="space-y-1 text-sm">
             <div className="text-slate-300">📁 apps/</div>
             <div className="ml-4 text-slate-400">📁 web/ (Next.js)</div>
@@ -115,8 +112,8 @@ helloWorld();`);
             <div className="ml-4 text-slate-400">📁 ai-agents/</div>
             <div className="ml-4 text-slate-400">📁 ui/</div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

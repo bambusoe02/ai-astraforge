@@ -1,8 +1,8 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@astraforge/ui";
-import { Badge } from "@astraforge/ui";
-import { CheckCircle, XCircle, Clock, AlertTriangle } from "lucide-react";
+// import { Card, CardContent, CardHeader, CardTitle } from "@astraforge/ui";
+// import { Badge } from "@astraforge/ui";
+// import { CheckCircle, XCircle, Clock, AlertTriangle } from "lucide-react";
 
 interface Project {
   name: string;
@@ -51,15 +51,15 @@ const projects: Project[] = [
 const getStatusIcon = (status: string) => {
   switch (status) {
     case "success":
-      return <CheckCircle className="w-4 h-4 text-green-500" />;
+      return "✅";
     case "failed":
-      return <XCircle className="w-4 h-4 text-red-500" />;
+      return "❌";
     case "building":
-      return <Clock className="w-4 h-4 text-yellow-500" />;
+      return "⏳";
     case "warning":
-      return <AlertTriangle className="w-4 h-4 text-orange-500" />;
+      return "⚠️";
     default:
-      return null;
+      return "❓";
   }
 };
 
@@ -81,11 +81,11 @@ const getStatusColor = (status: string) => {
 export function ProjectStatus() {
   return (
     <div className="space-y-6">
-      <Card className="bg-slate-800 border-slate-700">
-        <CardHeader>
-          <CardTitle className="text-white">Build Overview</CardTitle>
-        </CardHeader>
-        <CardContent>
+      <div className="bg-slate-800 border border-slate-700 rounded-lg">
+        <div className="p-6 border-b border-slate-700">
+          <h2 className="text-white text-xl font-semibold">Build Overview</h2>
+        </div>
+        <div className="p-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
               <div className="text-2xl font-bold text-green-500">3</div>
@@ -104,14 +104,14 @@ export function ProjectStatus() {
               <div className="text-sm text-slate-400">Failed</div>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
-      <Card className="bg-slate-800 border-slate-700">
-        <CardHeader>
-          <CardTitle className="text-white">Project Status</CardTitle>
-        </CardHeader>
-        <CardContent>
+      <div className="bg-slate-800 border border-slate-700 rounded-lg">
+        <div className="p-6 border-b border-slate-700">
+          <h2 className="text-white text-xl font-semibold">Project Status</h2>
+        </div>
+        <div className="p-6">
           <div className="space-y-4">
             {projects.map((project) => (
               <div
@@ -139,14 +139,14 @@ export function ProjectStatus() {
               </div>
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
-      <Card className="bg-slate-800 border-slate-700">
-        <CardHeader>
-          <CardTitle className="text-white">Agent Activity</CardTitle>
-        </CardHeader>
-        <CardContent>
+      <div className="bg-slate-800 border border-slate-700 rounded-lg">
+        <div className="p-6 border-b border-slate-700">
+          <h2 className="text-white text-xl font-semibold">Agent Activity</h2>
+        </div>
+        <div className="p-6">
           <div className="space-y-3">
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
@@ -169,8 +169,8 @@ export function ProjectStatus() {
               <span className="text-slate-500 text-sm">now</span>
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 }

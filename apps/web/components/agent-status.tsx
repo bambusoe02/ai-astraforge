@@ -1,12 +1,12 @@
 "use client";
 
-import { Badge } from "@astraforge/ui";
-import { Brain, Code, TestTube, Rocket, Monitor } from "lucide-react";
+// import { Badge } from "@astraforge/ui";
+// import { Brain, Code, TestTube, Rocket, Monitor } from "lucide-react";
 
 interface Agent {
   name: string;
   status: "active" | "idle" | "busy";
-  icon: React.ReactNode;
+  icon: string;
   description: string;
 }
 
@@ -14,32 +14,38 @@ const agents: Agent[] = [
   {
     name: "Architect",
     status: "active",
-    icon: <Brain className="w-4 h-4" />,
+    icon: "🏗️",
     description: "Designs system architecture",
   },
   {
     name: "Coder",
     status: "busy",
-    icon: <Code className="w-4 h-4" />,
+    icon: "💻",
     description: "Generates cross-platform code",
   },
   {
     name: "Tester",
     status: "idle",
-    icon: <TestTube className="w-4 h-4" />,
+    icon: "🧪",
     description: "Runs automated tests",
   },
   {
     name: "Deployer",
     status: "idle",
-    icon: <Rocket className="w-4 h-4" />,
+    icon: "🚀",
     description: "Handles deployments",
   },
   {
     name: "Monitor",
     status: "active",
-    icon: <Monitor className="w-4 h-4" />,
+    icon: "📊",
     description: "System health monitoring",
+  },
+  {
+    name: "Security",
+    status: "idle",
+    icon: "🔒",
+    description: "Security analysis & auditing",
   },
 ];
 
@@ -75,12 +81,11 @@ export function AgentStatus() {
                 {agent.description}
               </div>
             </div>
-            <Badge
-              variant="secondary"
-              className={`text-xs ${getStatusColor(agent.status)} text-white`}
+            <span
+              className={`text-xs px-2 py-1 rounded ${getStatusColor(agent.status)} text-white`}
             >
               {agent.status}
-            </Badge>
+            </span>
           </div>
         ))}
       </div>

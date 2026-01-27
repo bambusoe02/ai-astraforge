@@ -1,4 +1,5 @@
 import { Dashboard } from "../components/dashboard";
+import { HealthMonitor } from "../components/health-monitor";
 
 export default function HomePage() {
   return (
