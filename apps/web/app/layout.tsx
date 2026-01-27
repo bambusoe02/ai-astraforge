@@ -18,26 +18,11 @@ const hasClerkKeys = !!(
   process.env.CLERK_SECRET_KEY
 );
 
-// Dynamic import for ClerkProvider (client-side only, avoids build errors)
-async function getClerkProvider() {
-  if (typeof window !== "undefined" && hasClerkKeys) {
-    try {
-      const { ClerkProvider } = await import("@clerk/nextjs");
-      return ClerkProvider;
-    } catch (e) {
-      return null;
-    }
-  }
-  return null;
-}
-
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const ClerkProvider = await getClerkProvider();
-  
   const content = (
     <>
       {!hasClerkKeys && (
@@ -52,20 +37,7 @@ export default async function RootLayout({
     </>
   );
 
-  // Only wrap with ClerkProvider if available
-  if (hasClerkKeys && ClerkProvider) {
-    return (
-      <ClerkProvider>
-        <html lang="en" className="dark">
-          <body className={cn(inter.className, "min-h-screen bg-background")}>
-            {content}
-          </body>
-        </html>
-      </ClerkProvider>
-    );
-  }
-
-  // Demo mode without authentication
+  // Demo mode without authentication (Clerk disabled for demo)
   return (
     <html lang="en" className="dark">
       <body className={cn(inter.className, "min-h-screen bg-background")}>
