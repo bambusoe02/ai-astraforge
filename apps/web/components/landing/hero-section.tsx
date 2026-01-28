@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { track } from "@vercel/analytics";
-import { Button } from "@astraforge/ui";
 
 export function HeroSection() {
   return (
@@ -30,38 +29,27 @@ export function HeroSection() {
 
         {/* CTA buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button
-            size="lg"
-            asChild
-            className="bg-purple-600 hover:bg-purple-700"
+          <Link
+            href="/dashboard"
+            onClick={() => {
+              track("demo_clicked", { location: "hero" });
+            }}
+            className="px-6 py-3 rounded-lg font-semibold text-white bg-purple-600 hover:bg-purple-700 transition-all"
           >
-            <Link
-              href="/dashboard"
-              onClick={() => {
-                track("demo_clicked", { location: "hero" });
-              }}
-            >
-              Start Building Now →
-            </Link>
-          </Button>
+            Start Building Now →
+          </Link>
 
-          <Button
-            size="lg"
-            variant="outline"
-            asChild
-            className="border-gray-700 text-gray-100 hover:bg-gray-900"
+          <a
+            href="https://github.com/bambusoe02/ai-astraforge"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => {
+              track("github_star_clicked", { location: "hero" });
+            }}
+            className="px-6 py-3 rounded-lg font-semibold border border-gray-700 text-gray-100 hover:bg-gray-900 transition-all"
           >
-            <a
-              href="https://github.com/bambusoe02/ai-astraforge"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => {
-                track("github_star_clicked", { location: "hero" });
-              }}
-            >
-              ⭐ Star on GitHub
-            </a>
-          </Button>
+            ⭐ Star on GitHub
+          </a>
         </div>
 
         {/* Terminal */}
