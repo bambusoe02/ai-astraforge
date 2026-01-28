@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageSquare, Code, BarChart3, Menu, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { AgentStatus } from "../agent-status";
@@ -38,17 +38,23 @@ export function Sidebar({ activeView, onViewChange }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
+  // Close mobile menu on view change
+  useEffect(() => {
+    setIsMobileOpen(false);
+  }, [activeView]);
+
   return (
     <>
-      {/* Mobile Menu Button */}
+      {/* Mobile Menu Button - Larger tap target */}
       <button
-        className="lg:hidden fixed top-16 left-4 z-40 p-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white"
+        className="lg:hidden fixed top-14 left-4 z-50 p-3 min-w-[44px] min-h-[44px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white touch-manipulation"
         onClick={() => setIsMobileOpen(!isMobileOpen)}
+        aria-label="Toggle menu"
       >
         {isMobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
       </button>
 
-      {/* Sidebar */}
+      {/* Desktop Sidebar */}
       <motion.aside
         className={`hidden lg:flex flex-col backdrop-blur-xl bg-white/5 border-r border-white/10 transition-all duration-300 ${
           isCollapsed ? "w-20" : "w-72"
@@ -57,7 +63,7 @@ export function Sidebar({ activeView, onViewChange }: SidebarProps) {
         animate={{ width: isCollapsed ? 80 : 288 }}
       >
         {/* Logo Section */}
-        <div className="p-6 border-b border-white/10">
+        <div className="p-4 lg:p-6 border-b border-white/10">
           <div className={`flex items-center gap-3 ${isCollapsed ? "justify-center" : ""}`}>
             <div className="w-12 h-12 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/50 flex-shrink-0">
               <span className="text-2xl">🌌</span>
@@ -95,10 +101,10 @@ export function Sidebar({ activeView, onViewChange }: SidebarProps) {
               <div key={item.id} className="relative group">
                 <button
                   onClick={() => onViewChange(item.id)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
+                  className={`w-full flex items-center gap-3 px-4 py-3 min-h-[44px] rounded-xl transition-all duration-300 touch-manipulation ${
                     isActive
                       ? `${gradientClass} text-white shadow-lg shadow-purple-500/50 scale-105`
-                      : "text-slate-300 hover:bg-white/5 hover:scale-102"
+                      : "text-slate-300 lg:hover:bg-white/5 lg:hover:scale-102 active:bg-white/5"
                   } ${isCollapsed ? "justify-center" : ""}`}
                   title={isCollapsed ? item.tooltip : undefined}
                 >
@@ -145,10 +151,10 @@ export function Sidebar({ activeView, onViewChange }: SidebarProps) {
           </AnimatePresence>
         </div>
 
-        {/* Collapse Button */}
+        {/* Collapse Button - Desktop only */}
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="absolute -right-3 top-1/2 -translate-y-1/2 p-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white hover:bg-white/20 transition-all"
+          className="hidden lg:block absolute -right-3 top-1/2 -translate-y-1/2 p-1.5 min-w-[32px] min-h-[32px] bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white hover:bg-white/20 transition-all touch-manipulation"
           title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
           {isCollapsed ? (
@@ -164,20 +170,20 @@ export function Sidebar({ activeView, onViewChange }: SidebarProps) {
         {isMobileOpen && (
           <>
             <motion.div
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-30 lg:hidden"
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsMobileOpen(false)}
             />
             <motion.aside
-              className="fixed left-0 top-0 bottom-0 w-72 backdrop-blur-xl bg-white/5 border-r border-white/10 z-40 lg:hidden flex flex-col"
+              className="fixed left-0 top-0 bottom-0 w-72 max-w-[85vw] backdrop-blur-xl bg-white/5 border-r border-white/10 z-50 lg:hidden flex flex-col"
               initial={{ x: -288 }}
               animate={{ x: 0 }}
               exit={{ x: -288 }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
             >
-              <div className="p-6 border-b border-white/10">
+              <div className="p-4 border-b border-white/10">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/50">
                     <span className="text-2xl">🌌</span>
@@ -206,10 +212,10 @@ export function Sidebar({ activeView, onViewChange }: SidebarProps) {
                         onViewChange(item.id);
                         setIsMobileOpen(false);
                       }}
-                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
+                      className={`w-full flex items-center gap-3 px-4 py-3 min-h-[44px] rounded-xl transition-all duration-300 touch-manipulation ${
                         isActive
                           ? `${gradientClass} text-white shadow-lg shadow-purple-500/50`
-                          : "text-slate-300 hover:bg-white/5"
+                          : "text-slate-300 active:bg-white/5"
                       }`}
                     >
                       <Icon className="w-5 h-5" />
@@ -228,4 +234,3 @@ export function Sidebar({ activeView, onViewChange }: SidebarProps) {
     </>
   );
 }
-

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import { Send, Loader2 } from "lucide-react";
 
 interface Message {
   id: string;
@@ -84,29 +85,29 @@ export function AgentChat() {
   return (
     <div className="h-full flex flex-col bg-gradient-to-br from-slate-900/50 to-slate-800/50">
       {/* Header */}
-      <div className="p-6 border-b border-white/10 backdrop-blur-sm bg-white/5">
+      <div className="p-4 sm:p-6 border-b border-white/10 backdrop-blur-sm bg-white/5 flex-shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-            <span className="text-xl">🤖</span>
+          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+            <span className="text-lg sm:text-xl">🤖</span>
           </div>
           <div>
-            <h2 className="text-xl font-bold text-white">AI Agent Chat</h2>
-            <p className="text-sm text-slate-400">Chat with specialized AI agents</p>
+            <h2 className="text-lg sm:text-xl font-bold text-white">AI Agent Chat</h2>
+            <p className="text-xs sm:text-sm text-slate-400">Chat with specialized AI agents</p>
           </div>
         </div>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-3 sm:space-y-4">
         {messages.length === 0 && (
           <div className="flex items-center justify-center h-full">
-            <div className="text-center max-w-md">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <span className="text-4xl">💬</span>
+            <div className="text-center max-w-md px-4">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <span className="text-3xl sm:text-4xl">💬</span>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-2">No messages yet</h3>
-              <p className="text-slate-400 mb-4">Start by describing your app idea</p>
-              <div className="text-sm text-slate-500 space-y-1">
+              <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">No messages yet</h3>
+              <p className="text-sm sm:text-base text-slate-400 mb-4">Start by describing your app idea</p>
+              <div className="text-xs sm:text-sm text-slate-500 space-y-1">
                 <p>💡 Try: "Build a task management app"</p>
                 <p>💡 Try: "Create a social media platform"</p>
               </div>
@@ -117,18 +118,18 @@ export function AgentChat() {
         {messages.map((message) => (
           <div
             key={message.id}
-            className={`flex gap-4 ${
+            className={`flex gap-2 sm:gap-4 ${
               message.role === "user" ? "justify-end" : "justify-start"
             }`}
           >
             {message.role === "agent" && (
-              <div className={`w-10 h-10 bg-gradient-to-br ${getAgentGradient(message.agent)} rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg`}>
-                <span className="text-lg">{getAgentIcon(message.agent)}</span>
+              <div className={`w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br ${getAgentGradient(message.agent)} rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg`}>
+                <span className="text-base sm:text-lg">{getAgentIcon(message.agent)}</span>
               </div>
             )}
 
             <div
-              className={`max-w-[70%] rounded-2xl px-4 py-3 backdrop-blur-sm ${
+              className={`max-w-[85%] sm:max-w-[70%] rounded-2xl px-3 sm:px-4 py-2 sm:py-3 backdrop-blur-sm ${
                 message.role === "user"
                   ? "bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/50"
                   : "bg-white/10 text-slate-200 border border-white/10"
@@ -139,23 +140,23 @@ export function AgentChat() {
                   {message.agent}
                 </div>
               )}
-              <p className="text-sm leading-relaxed">{message.content}</p>
+              <p className="text-xs sm:text-sm leading-relaxed break-words">{message.content}</p>
             </div>
 
             {message.role === "user" && (
-              <div className="w-10 h-10 bg-gradient-to-br from-slate-600 to-slate-700 rounded-xl flex items-center justify-center flex-shrink-0">
-                <span className="text-lg">👤</span>
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-slate-600 to-slate-700 rounded-xl flex items-center justify-center flex-shrink-0">
+                <span className="text-base sm:text-lg">👤</span>
               </div>
             )}
           </div>
         ))}
 
         {isLoading && (
-          <div className="flex gap-4 justify-start">
-            <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-              <span className="text-lg">🤖</span>
+          <div className="flex gap-2 sm:gap-4 justify-start">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+              <span className="text-base sm:text-lg">🤖</span>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-4 py-3 border border-white/10">
+            <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-3 sm:px-4 py-2 sm:py-3 border border-white/10">
               <div className="flex space-x-2">
                 {[0, 1, 2].map((i) => (
                   <div
@@ -172,23 +173,28 @@ export function AgentChat() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input */}
-      <div className="p-6 border-t border-white/10 backdrop-blur-sm bg-white/5">
-        <div className="flex gap-3">
+      {/* Input - Larger tap target on mobile */}
+      <div className="p-4 sm:p-6 border-t border-white/10 backdrop-blur-sm bg-white/5 flex-shrink-0">
+        <div className="flex gap-2 sm:gap-3">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(e) => e.key === "Enter" && !e.shiftKey && sendMessage()}
             placeholder="Describe what you want to build..."
-            className="flex-1 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+            className="flex-1 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3 min-h-[44px] text-sm sm:text-base text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
           />
           <button
             onClick={sendMessage}
             disabled={isLoading || !input.trim()}
-            className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-purple-500/50 transition-all transform hover:scale-105"
+            className="px-4 sm:px-6 py-3 min-h-[44px] min-w-[44px] bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-medium disabled:opacity-50 disabled:cursor-not-allowed active:shadow-lg active:shadow-purple-500/50 transition-all touch-manipulation flex items-center justify-center"
+            aria-label="Send message"
           >
-            {isLoading ? "⏳" : "📤"}
+            {isLoading ? (
+              <Loader2 className="w-5 h-5 animate-spin" />
+            ) : (
+              <Send className="w-5 h-5" />
+            )}
           </button>
         </div>
       </div>

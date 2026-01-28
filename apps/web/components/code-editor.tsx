@@ -83,28 +83,28 @@ helloWorld();`);
   };
 
   return (
-    <div className="h-full flex flex-col bg-gradient-to-br from-slate-900 to-slate-950">
-      {/* Header */}
-      <div className="p-4 border-b border-white/10 backdrop-blur-sm bg-white/5">
-        <div className="flex items-center justify-between flex-wrap gap-4">
-          <div className="flex items-center gap-3">
-            <h2 className="text-xl font-bold text-white">Code Editor</h2>
+    <div className="h-full flex flex-col bg-gradient-to-br from-slate-900 to-slate-950 overflow-hidden">
+      {/* Header - Compact on mobile */}
+      <div className="p-3 sm:p-4 border-b border-white/10 backdrop-blur-sm bg-white/5 flex-shrink-0">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <h2 className="text-lg sm:text-xl font-bold text-white">Code Editor</h2>
             <div className="px-2 py-1 bg-purple-500/20 border border-purple-500/30 rounded text-xs text-purple-200">
               {currentPlatform?.label}
             </div>
           </div>
 
-          <div className="flex items-center gap-2 flex-wrap">
-            {/* Platform Tabs */}
-            <div className="flex gap-1 bg-white/5 rounded-lg p-1 border border-white/10">
+          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+            {/* Platform Tabs - Compact on mobile */}
+            <div className="flex gap-1 bg-white/5 rounded-lg p-1 border border-white/10 w-full sm:w-auto">
               {platforms.map((p) => (
                 <button
                   key={p.value}
                   onClick={() => handlePlatformChange(p.value)}
-                  className={`px-3 py-1.5 text-sm rounded transition-all ${
+                  className={`flex-1 sm:flex-none px-2 sm:px-3 py-1.5 min-h-[44px] text-xs sm:text-sm rounded transition-all touch-manipulation ${
                     platform === p.value
                       ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white"
-                      : "text-slate-300 hover:bg-white/5"
+                      : "text-slate-300 active:bg-white/5"
                   }`}
                 >
                   {p.label}
@@ -112,74 +112,81 @@ helloWorld();`);
               ))}
             </div>
 
-            {/* Actions */}
+            {/* Actions - Icon only on mobile */}
             <button
               onClick={handleGenerateCode}
               disabled={isGenerating}
-              className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-purple-500/50 transition-all flex items-center gap-2"
+              className="px-3 sm:px-4 py-2 min-h-[44px] bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed active:shadow-lg active:shadow-purple-500/50 transition-all flex items-center gap-2 touch-manipulation"
             >
               <Sparkles className={`w-4 h-4 ${isGenerating ? "animate-spin" : ""}`} />
-              {isGenerating ? "Generating..." : "Generate"}
+              <span className="hidden sm:inline">{isGenerating ? "Generating..." : "Generate"}</span>
             </button>
 
             <button
               onClick={handleCopy}
-              className="px-4 py-2 bg-white/5 border border-white/20 text-white rounded-lg hover:bg-white/10 transition-all flex items-center gap-2"
+              className="px-3 py-2 min-h-[44px] bg-white/5 border border-white/20 text-white rounded-lg active:bg-white/10 transition-all flex items-center gap-2 touch-manipulation"
+              title="Copy code"
             >
               {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
-              {copied ? "Copied!" : "Copy"}
+              <span className="hidden sm:inline">{copied ? "Copied!" : "Copy"}</span>
             </button>
 
             <button
               onClick={handleDownload}
-              className="px-4 py-2 bg-white/5 border border-white/20 text-white rounded-lg hover:bg-white/10 transition-all flex items-center gap-2"
+              className="px-3 py-2 min-h-[44px] bg-white/5 border border-white/20 text-white rounded-lg active:bg-white/10 transition-all flex items-center gap-2 touch-manipulation"
+              title="Download code"
             >
               <Download className="w-4 h-4" />
-              Download
+              <span className="hidden sm:inline">Download</span>
             </button>
 
             <button
               onClick={handleSave}
-              className="px-4 py-2 bg-white/5 border border-white/20 text-white rounded-lg hover:bg-white/10 transition-all flex items-center gap-2"
+              className="px-3 py-2 min-h-[44px] bg-white/5 border border-white/20 text-white rounded-lg active:bg-white/10 transition-all flex items-center gap-2 touch-manipulation"
+              title="Save code"
             >
               {saved ? <Check className="w-4 h-4 text-green-400" /> : <Save className="w-4 h-4" />}
-              {saved ? "Saved!" : "Save"}
+              <span className="hidden sm:inline">{saved ? "Saved!" : "Save"}</span>
             </button>
 
             <button
               onClick={handleRun}
-              className="px-4 py-2 bg-green-500/20 border border-green-500/30 text-green-200 rounded-lg hover:bg-green-500/30 transition-all flex items-center gap-2"
+              className="px-3 py-2 min-h-[44px] bg-green-500/20 border border-green-500/30 text-green-200 rounded-lg active:bg-green-500/30 transition-all flex items-center gap-2 touch-manipulation"
+              title="Run code"
             >
               <Play className="w-4 h-4" />
-              Run
+              <span className="hidden sm:inline">Run</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* Editor */}
-      <div className="flex-1 overflow-hidden">
-        <Editor
-          height="100%"
-          language={language}
-          value={code}
-          theme={theme}
-          onChange={(value) => setCode(value || "")}
-          options={{
-            minimap: { enabled: true },
-            fontSize: 14,
-            lineNumbers: "on",
-            roundedSelection: false,
-            scrollBeyondLastLine: false,
-            automaticLayout: true,
-            tabSize: 2,
-            insertSpaces: true,
-            wordWrap: "on",
-            padding: { top: 16, bottom: 16 },
-            fontFamily: "'Fira Code', 'Courier New', monospace",
-            fontLigatures: true,
-          }}
-        />
+      {/* Editor - Horizontal scroll on mobile */}
+      <div className="flex-1 overflow-hidden relative">
+        <div className="absolute inset-0 overflow-x-auto">
+          <Editor
+            height="100%"
+            language={language}
+            value={code}
+            theme={theme}
+            onChange={(value) => setCode(value || "")}
+            options={{
+              minimap: { enabled: false }, // Disable minimap on mobile
+              fontSize: 12, // Smaller font on mobile
+              lineNumbers: "on",
+              roundedSelection: false,
+              scrollBeyondLastLine: false,
+              automaticLayout: true,
+              tabSize: 2,
+              insertSpaces: true,
+              wordWrap: "off", // Allow horizontal scroll
+              padding: { top: 16, bottom: 16 },
+              fontFamily: "'Fira Code', 'Courier New', monospace",
+              fontLigatures: true,
+            }}
+            className="min-w-full"
+          />
+        </div>
       </div>
     </div>
   );

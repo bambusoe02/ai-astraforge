@@ -21,13 +21,13 @@ export function Dashboard() {
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }}></div>
       </div>
 
-      <div className="relative flex h-screen pt-12">
+      <div className="relative flex flex-col lg:flex-row h-screen pt-12 sm:pt-14">
         {/* Sidebar */}
         <Sidebar activeView={activeView} onViewChange={setActiveView} />
 
         {/* Main Content Area */}
-        <main className="flex-1 overflow-hidden p-6">
-          <div className="h-full backdrop-blur-xl bg-white/5 rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
+        <main className="flex-1 overflow-hidden p-4 sm:p-6 lg:p-6 min-h-0">
+          <div className="h-full backdrop-blur-xl bg-white/5 rounded-xl lg:rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
             {activeView === "chat" && <AgentChat />}
             {activeView === "editor" && <CodeEditor />}
             {activeView === "status" && <ProjectStatus />}

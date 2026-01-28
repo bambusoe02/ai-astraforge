@@ -32,4 +32,20 @@
   .scale-102 {
     transform: scale(1.02);
   }
+  
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  button, a {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
+  }
 }
