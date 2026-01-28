@@ -6,34 +6,37 @@ const features = [
   {
     icon: "🤖",
     title: "5 AI Agents",
+    subtitle: "Your personal dev team that never sleeps",
     items: [
-      { name: "Architect", desc: "System design" },
-      { name: "Coder", desc: "Cross-platform generation" },
-      { name: "Tester", desc: "Automated QA" },
-      { name: "Deployer", desc: "CI/CD automation" },
-      { name: "Monitor", desc: "Health tracking" },
+      { name: "Architect", desc: "Plans your entire system architecture like a senior engineer" },
+      { name: "Coder", desc: "Writes production-ready code across all platforms simultaneously" },
+      { name: "Tester", desc: "Catches bugs before they reach production" },
+      { name: "Deployer", desc: "Ships your code with enterprise-grade CI/CD" },
+      { name: "Monitor", desc: "Keeps your systems healthy 24/7" },
     ],
     gradient: "from-purple-500 to-pink-500",
   },
   {
     icon: "🌐",
     title: "4 Platforms",
+    subtitle: "Write once, deploy everywhere",
     items: [
-      { name: "Next.js", desc: "Web dashboard" },
-      { name: "FastAPI", desc: "Backend API" },
-      { name: "React Native", desc: "Mobile" },
-      { name: "Chrome Extension", desc: "Browser extension" },
+      { name: "Next.js", desc: "Modern web dashboard with server-side rendering" },
+      { name: "FastAPI", desc: "High-performance backend API with async support" },
+      { name: "React Native", desc: "Cross-platform mobile apps for iOS and Android" },
+      { name: "Chrome Extension", desc: "Browser extension for enhanced productivity" },
     ],
     gradient: "from-blue-500 to-cyan-500",
   },
   {
     icon: "⚡",
     title: "4 Minutes",
+    subtitle: "From idea to working prototype faster than ordering coffee",
     items: [
-      { name: "Natural language", desc: "Input" },
-      { name: "Instant architecture", desc: "Planning" },
-      { name: "Production-ready", desc: "Code" },
-      { name: "Auto-deployment", desc: "Ready" },
+      { name: "Natural language", desc: "Describe your app in plain English" },
+      { name: "Instant architecture", desc: "AI plans your entire system structure" },
+      { name: "Production-ready", desc: "Enterprise-grade code that's ready to deploy" },
+      { name: "Auto-deployment", desc: "One-click deployment to your preferred platform" },
     ],
     gradient: "from-green-500 to-emerald-500",
   },
@@ -71,7 +74,8 @@ export function FeaturesGrid() {
               <div className={`w-16 h-16 bg-gradient-to-br ${feature.gradient} rounded-xl flex items-center justify-center text-3xl mb-6 shadow-lg`}>
                 {feature.icon}
               </div>
-              <h3 className="text-2xl font-bold text-white mb-6">{feature.title}</h3>
+              <h3 className="text-2xl font-bold text-white mb-2">{feature.title}</h3>
+              <p className="text-slate-400 text-sm mb-6">{feature.subtitle}</p>
               <ul className="space-y-4">
                 {feature.items.map((item) => (
                   <li key={item.name} className="flex items-start gap-3">
@@ -90,4 +94,3 @@ export function FeaturesGrid() {
     </section>
   );
 }
-

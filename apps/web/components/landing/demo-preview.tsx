@@ -67,8 +67,11 @@ export function DemoPreview() {
             {/* Badge */}
             <div className="mt-6 flex items-center justify-center">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20">
-                <span className="text-sm text-yellow-200">🚧 Web Demo Available - Full Stack Coming Soon</span>
+                <span className="text-sm text-yellow-200">🚧 Interactive Demo - Full API integration coming soon</span>
               </div>
+            </div>
+            <div className="mt-2 text-center">
+              <p className="text-xs text-slate-400">Currently showing: Mock data and simulated agent responses</p>
             </div>
 
             {/* CTA Button */}
@@ -77,7 +80,7 @@ export function DemoPreview() {
                 href="/dashboard"
                 className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold text-lg shadow-lg shadow-purple-500/50 hover:shadow-xl hover:shadow-purple-500/50 transition-all transform hover:scale-105"
               >
-                Launch Interactive Demo →
+                See It In Action →
               </Link>
             </div>
           </div>
@@ -86,4 +89,3 @@ export function DemoPreview() {
     </section>
   );
 }
-

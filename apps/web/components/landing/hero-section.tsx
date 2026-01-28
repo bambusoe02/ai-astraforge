@@ -68,9 +68,9 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            Build Full-Stack Apps
+            Stop Building Apps
             <br />
-            Across 4 Platforms in 4 Minutes
+            One Platform at a Time
           </motion.h1>
 
           <motion.p
@@ -79,7 +79,7 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            AI-powered monorepo factory with 5 specialized agents
+            Generate production-ready monorepos across Web, API, Mobile, and Extension in minutes, not months
           </motion.p>
 
           <motion.div
@@ -92,7 +92,7 @@ export function HeroSection() {
               href="/dashboard"
               className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold text-lg shadow-lg shadow-purple-500/50 hover:shadow-xl hover:shadow-purple-500/50 transition-all transform hover:scale-105"
             >
-              Try Interactive Demo →
+              Start Building Now →
             </Link>
             <a
               href="https://github.com/bambusoe02/ai-astraforge"
@@ -122,13 +122,13 @@ export function HeroSection() {
                   <span className="text-cyan-400">$</span> astraforge create
                 </div>
                 <div className="text-slate-400 mt-2">
-                  <span className="text-green-400">✓</span> Architect: Designing system...
+                  <span className="text-green-400">✓</span> Architect: Planning system architecture...
                 </div>
                 <div className="text-slate-400">
-                  <span className="text-green-400">✓</span> Coder: Generating code...
+                  <span className="text-green-400">✓</span> Coder: Generating code across platforms...
                 </div>
                 <div className="text-slate-400">
-                  <span className="text-green-400">✓</span> Tester: Running tests...
+                  <span className="text-green-400">✓</span> Tester: Running automated tests...
                 </div>
                 <div className="text-purple-400 mt-2">
                   <span className="text-cyan-400">→</span> Ready in 4 minutes!
@@ -141,4 +141,3 @@ export function HeroSection() {
     </section>
   );
 }
-

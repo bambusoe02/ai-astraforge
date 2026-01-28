@@ -17,7 +17,7 @@ export function CTASection() {
             Ready to revolutionize your development workflow?
           </h2>
           <p className="text-xl text-slate-400 mb-12">
-            Join the future of AI-powered development
+            Join 100+ developers building faster with AI-powered monorepos
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
@@ -25,7 +25,7 @@ export function CTASection() {
               href="/dashboard"
               className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold text-lg shadow-lg shadow-purple-500/50 hover:shadow-xl hover:shadow-purple-500/50 transition-all transform hover:scale-105"
             >
-              Try Demo
+              Start Building Now
             </Link>
             <a
               href="https://github.com/bambusoe02/ai-astraforge"
@@ -79,4 +79,3 @@ export function CTASection() {
     </section>
   );
 }
-

@@ -1,11 +1,11 @@
 // lib/mock-data.ts
 export const mockAgentStatus: Record<string, { status: 'active' | 'busy' | 'idle'; message: string }> = {
-  architect: { status: 'active' as const, message: 'Analyzing requirements...' },
-  coder: { status: 'busy' as const, message: 'Generating code...' },
-  tester: { status: 'idle' as const, message: 'Waiting for code...' },
-  deployer: { status: 'idle' as const, message: 'Ready to deploy' },
-  monitor: { status: 'active' as const, message: 'System healthy' },
-  security: { status: 'idle' as const, message: 'Scanning...' }
+  architect: { status: 'active' as const, message: 'Planning system architecture like a senior engineer' },
+  coder: { status: 'busy' as const, message: 'Writing production-ready code across all platforms' },
+  tester: { status: 'idle' as const, message: 'Ready to catch bugs before production' },
+  deployer: { status: 'idle' as const, message: 'Ready to ship with enterprise-grade CI/CD' },
+  monitor: { status: 'active' as const, message: 'Keeping systems healthy 24/7' },
+  security: { status: 'idle' as const, message: 'Scanning for vulnerabilities...' }
 };
 
 export const mockGeneratedCode = {
@@ -110,10 +110,10 @@ export const mockAgentActivity: Array<{
   time: string;
   status: string;
 }> = [
-  { agent: "Architect", message: "System design completed", time: "2m ago", status: "success" },
-  { agent: "Coder", message: "Generating API endpoints", time: "1m ago", status: "info" },
-  { agent: "Tester", message: "Running integration tests", time: "30s ago", status: "info" },
-  { agent: "Deployer", message: "Deploying to staging", time: "now", status: "info" },
+  { agent: "Architect", message: "Planned entire system architecture", time: "2m ago", status: "success" },
+  { agent: "Coder", message: "Generated production-ready code across platforms", time: "1m ago", status: "info" },
+  { agent: "Tester", message: "Caught 3 bugs before production", time: "30s ago", status: "info" },
+  { agent: "Deployer", message: "Deploying with enterprise-grade CI/CD", time: "now", status: "info" },
 ];
 
 export const simulateApiDelay = (ms: number) => new Promise(res => setTimeout(res, ms));

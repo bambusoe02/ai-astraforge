@@ -6,28 +6,28 @@ const steps = [
   {
     number: "1",
     title: "Describe",
-    description: "Build task management app",
+    description: "Tell us what you want to build in plain English",
     icon: "💬",
     gradient: "from-purple-500 to-pink-500",
   },
   {
     number: "2",
     title: "Architect",
-    description: "Plans system architecture",
+    description: "AI plans your entire system architecture",
     icon: "🏗️",
     gradient: "from-blue-500 to-cyan-500",
   },
   {
     number: "3",
     title: "Coder",
-    description: "Generates across platforms",
+    description: "Generates production-ready code across all platforms",
     icon: "💻",
     gradient: "from-green-500 to-emerald-500",
   },
   {
     number: "4",
     title: "Deploy",
-    description: "Production-ready monorepo",
+    description: "Your monorepo is ready for production deployment",
     icon: "🚀",
     gradient: "from-orange-500 to-red-500",
   },
@@ -84,4 +84,3 @@ export function HowItWorks() {
     </section>
   );
 }
-
