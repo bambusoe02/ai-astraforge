@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { Button } from "@astraforge/ui";
 import { AlertTriangle, RefreshCw, Home } from "lucide-react";
 import Link from "next/link";
 import { track } from "@vercel/analytics";
@@ -49,21 +48,19 @@ export default function DashboardError({
 
         {/* Actions */}
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Button
+          <button
             onClick={reset}
-            className="bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600"
+            className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all flex items-center justify-center"
           >
             <RefreshCw className="w-4 h-4 mr-2" />
             Try again
-          </Button>
-          <Link href="/">
-            <Button
-              variant="outline"
-              className="border-gray-700 text-gray-300 hover:bg-gray-800"
-            >
-              <Home className="w-4 h-4 mr-2" />
-              Go home
-            </Button>
+          </button>
+          <Link
+            href="/"
+            className="px-6 py-3 border border-gray-700 text-gray-300 rounded-lg font-semibold hover:bg-gray-800 transition-all flex items-center justify-center"
+          >
+            <Home className="w-4 h-4 mr-2" />
+            Go home
           </Link>
         </div>
 
