@@ -83,16 +83,16 @@ export function AgentChat() {
   };
 
   return (
-    <div className="h-full flex flex-col bg-gradient-to-br from-slate-900/50 to-slate-800/50">
+    <div className="h-full flex flex-col bg-gray-900/80 backdrop-blur-xl">
       {/* Header */}
-      <div className="p-4 sm:p-6 border-b border-white/10 backdrop-blur-sm bg-white/5 flex-shrink-0">
+      <div className="p-4 sm:p-6 border-b border-gray-800 backdrop-blur-sm bg-gray-900/90 flex-shrink-0">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
             <span className="text-lg sm:text-xl">🤖</span>
           </div>
           <div>
-            <h2 className="text-lg sm:text-xl font-bold text-white">AI Agent Chat</h2>
-            <p className="text-xs sm:text-sm text-slate-400">Chat with specialized AI agents</p>
+            <h2 className="text-lg sm:text-xl font-bold text-gray-100">AI Agent Chat</h2>
+            <p className="text-xs sm:text-sm text-gray-400">Chat with specialized AI agents</p>
           </div>
         </div>
       </div>
@@ -105,9 +105,9 @@ export function AgentChat() {
               <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <span className="text-3xl sm:text-4xl">💬</span>
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">No messages yet</h3>
-              <p className="text-sm sm:text-base text-slate-400 mb-4">Start by describing your app idea</p>
-              <div className="text-xs sm:text-sm text-slate-500 space-y-1">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-100 mb-2">No messages yet</h3>
+              <p className="text-sm sm:text-base text-gray-300 mb-4">Start by describing your app idea</p>
+              <div className="text-xs sm:text-sm text-gray-400 space-y-1">
                 <p>💡 Try: "Build a task management app"</p>
                 <p>💡 Try: "Create a social media platform"</p>
               </div>
@@ -132,7 +132,7 @@ export function AgentChat() {
               className={`max-w-[85%] sm:max-w-[70%] rounded-2xl px-3 sm:px-4 py-2 sm:py-3 backdrop-blur-sm ${
                 message.role === "user"
                   ? "bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/50"
-                  : "bg-white/10 text-slate-200 border border-white/10"
+                  : "bg-gray-800/80 text-gray-200 border border-gray-700"
               }`}
             >
               {message.agent && (
@@ -144,7 +144,7 @@ export function AgentChat() {
             </div>
 
             {message.role === "user" && (
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-slate-600 to-slate-700 rounded-xl flex items-center justify-center flex-shrink-0">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl flex items-center justify-center flex-shrink-0">
                 <span className="text-base sm:text-lg">👤</span>
               </div>
             )}
@@ -156,7 +156,7 @@ export function AgentChat() {
             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
               <span className="text-base sm:text-lg">🤖</span>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-3 sm:px-4 py-2 sm:py-3 border border-white/10">
+            <div className="bg-gray-800/80 backdrop-blur-sm rounded-2xl px-3 sm:px-4 py-2 sm:py-3 border border-gray-700">
               <div className="flex space-x-2">
                 {[0, 1, 2].map((i) => (
                   <div
@@ -174,7 +174,7 @@ export function AgentChat() {
       </div>
 
       {/* Input - Larger tap target on mobile */}
-      <div className="p-4 sm:p-6 border-t border-white/10 backdrop-blur-sm bg-white/5 flex-shrink-0">
+      <div className="p-4 sm:p-6 border-t border-gray-800 backdrop-blur-sm bg-gray-900/90 flex-shrink-0">
         <div className="flex gap-2 sm:gap-3">
           <input
             type="text"
@@ -182,7 +182,7 @@ export function AgentChat() {
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(e) => e.key === "Enter" && !e.shiftKey && sendMessage()}
             placeholder="Describe what you want to build..."
-            className="flex-1 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3 min-h-[44px] text-sm sm:text-base text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
+            className="flex-1 bg-gray-800/80 backdrop-blur-sm border border-gray-700 rounded-xl px-4 py-3 min-h-[44px] text-sm sm:text-base text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 transition-all"
           />
           <button
             onClick={sendMessage}

@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 export function Navbar() {
   return (
     <motion.nav
-      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/5 border-b border-white/10"
+      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-gray-900/95 border-b border-gray-800"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
@@ -27,7 +27,7 @@ export function Navbar() {
           <div className="flex items-center gap-4">
             <Link
               href="/dashboard"
-              className="px-4 py-2 text-slate-300 hover:text-white transition-colors"
+              className="px-4 py-2 text-gray-300 hover:text-gray-100 transition-colors"
             >
               Dashboard
             </Link>
@@ -35,7 +35,7 @@ export function Navbar() {
               href="https://github.com/bambusoe02/ai-astraforge"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/20 text-white rounded-lg hover:bg-white/10 transition-all"
+              className="px-4 py-2 bg-gray-800/80 backdrop-blur-sm border border-gray-700 text-gray-100 rounded-lg hover:bg-gray-800 transition-all"
             >
               GitHub
             </a>

@@ -27,7 +27,7 @@ export function TechStack() {
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
             Built With Modern Tech
           </h2>
-          <p className="text-xl text-slate-400">
+          <p className="text-xl text-gray-300">
             Production-ready stack trusted by developers
           </p>
         </motion.div>
@@ -36,14 +36,14 @@ export function TechStack() {
           {techStack.map((tech, index) => (
             <motion.div
               key={tech.name}
-              className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-xl p-6 text-center hover:bg-white/10 transition-all"
+              className="backdrop-blur-xl bg-gray-900/80 border border-gray-800 rounded-xl p-6 text-center hover:bg-gray-900/90 transition-all"
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
             >
               <div className="text-4xl mb-3">{tech.icon}</div>
-              <div className="text-white font-semibold">{tech.name}</div>
+              <div className="text-gray-100 font-semibold">{tech.name}</div>
             </motion.div>
           ))}
         </div>

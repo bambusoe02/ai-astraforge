@@ -47,7 +47,7 @@ export function HowItWorks() {
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
             How It Works
           </h2>
-          <p className="text-xl text-slate-400">
+          <p className="text-xl text-gray-300">
             From idea to production in 4 simple steps
           </p>
         </motion.div>
@@ -66,15 +66,15 @@ export function HowItWorks() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-8 text-center hover:bg-white/10 transition-all">
+                <div className="backdrop-blur-xl bg-gray-900/80 border border-gray-800 rounded-2xl p-8 text-center hover:bg-gray-900/90 transition-all">
                   <div className={`w-20 h-20 bg-gradient-to-br ${step.gradient} rounded-2xl flex items-center justify-center text-4xl mb-6 mx-auto shadow-lg`}>
                     {step.icon}
                   </div>
                   <div className={`w-12 h-12 bg-gradient-to-br ${step.gradient} rounded-full flex items-center justify-center text-xl font-bold text-white mb-4 mx-auto shadow-lg`}>
                     {step.number}
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-2">{step.title}</h3>
-                  <p className="text-slate-400">{step.description}</p>
+                  <h3 className="text-2xl font-bold text-gray-100 mb-2">{step.title}</h3>
+                  <p className="text-gray-300">{step.description}</p>
                 </div>
               </motion.div>
             ))}

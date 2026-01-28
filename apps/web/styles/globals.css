@@ -25,6 +25,25 @@
   body {
     @apply text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    background: linear-gradient(
+      to bottom,
+      rgb(17, 24, 39),     /* gray-900 */
+      rgb(30, 27, 75),     /* dark purple */
+      rgb(17, 24, 39)      /* gray-900 */
+    );
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  /* Subtle noise texture for depth */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.3;
+    z-index: 0;
   }
 }
 

@@ -77,11 +77,11 @@ export function AgentStatus() {
         
         // Mock recent activities
         const mockActivities: Activity[] = [
-          { agent: "Architect", action: "System design completed", timestamp: new Date(Date.now() - 120000), status: "success" },
-          { agent: "Coder", action: "Generating API endpoints", timestamp: new Date(Date.now() - 60000), status: "info" },
-          { agent: "Tester", action: "Running integration tests", timestamp: new Date(Date.now() - 30000), status: "info" },
-          { agent: "Deployer", action: "Deploying to staging", timestamp: new Date(Date.now() - 10000), status: "info" },
-          { agent: "Monitor", action: "System health check", timestamp: new Date(Date.now() - 5000), status: "success" },
+          { agent: "Architect", action: "Planned entire system architecture", timestamp: new Date(Date.now() - 120000), status: "success" },
+          { agent: "Coder", action: "Generated production-ready code across platforms", timestamp: new Date(Date.now() - 60000), status: "info" },
+          { agent: "Tester", action: "Caught 3 bugs before production", timestamp: new Date(Date.now() - 30000), status: "info" },
+          { agent: "Deployer", action: "Deploying with enterprise-grade CI/CD", timestamp: new Date(Date.now() - 10000), status: "info" },
+          { agent: "Monitor", action: "System health check passed", timestamp: new Date(Date.now() - 5000), status: "success" },
         ];
         setActivities(mockActivities.slice(0, 5));
         
@@ -98,14 +98,14 @@ export function AgentStatus() {
   if (isLoading) {
     return (
       <div>
-        <h3 className="text-sm font-semibold text-slate-300 mb-3">AI Agents</h3>
+        <h3 className="text-sm font-semibold text-gray-300 mb-3">AI Agents</h3>
         <div className="space-y-2">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className="flex items-center gap-2 p-2 rounded-lg bg-white/5 animate-pulse">
-              <div className="w-8 h-8 bg-white/10 rounded-lg"></div>
+            <div key={i} className="flex items-center gap-2 p-2 rounded-lg bg-gray-800/80 animate-pulse">
+              <div className="w-8 h-8 bg-gray-700 rounded-lg"></div>
               <div className="flex-1">
-                <div className="h-3 bg-white/10 rounded w-20 mb-1"></div>
-                <div className="h-2 bg-white/10 rounded w-32"></div>
+                <div className="h-3 bg-gray-700 rounded w-20 mb-1"></div>
+                <div className="h-2 bg-gray-700 rounded w-32"></div>
               </div>
             </div>
           ))}
@@ -116,12 +116,12 @@ export function AgentStatus() {
 
   return (
     <div>
-      <h3 className="text-sm font-semibold text-slate-300 mb-3">AI Agents</h3>
+      <h3 className="text-sm font-semibold text-gray-300 mb-3">AI Agents</h3>
       <div className="space-y-2 mb-4">
         {agents.map((agent) => (
           <motion.div
             key={agent.name}
-            className="relative p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10"
+            className="relative p-2 rounded-lg bg-gray-800/80 hover:bg-gray-800 transition-colors border border-gray-700"
             whileHover={{ scale: 1.02 }}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -133,19 +133,19 @@ export function AgentStatus() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <div className="text-sm font-medium text-white truncate">
+                  <div className="text-sm font-medium text-gray-100 truncate">
                     {agent.name}
                   </div>
                   <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded ${getStatusColor(agent.status)}/20`}>
                     {getStatusIcon(agent.status)}
                   </div>
                 </div>
-                <div className="text-xs text-slate-400 truncate mt-0.5">
+                <div className="text-xs text-gray-400 truncate mt-0.5">
                   {agent.description}
                 </div>
                 {agent.progress !== undefined && (
                   <div className="mt-2">
-                    <div className="h-1 bg-white/10 rounded-full overflow-hidden">
+                    <div className="h-1 bg-gray-700 rounded-full overflow-hidden">
                       <motion.div
                         className={`h-full ${getStatusColor(agent.status)}`}
                         initial={{ width: 0 }}
@@ -153,7 +153,7 @@ export function AgentStatus() {
                         transition={{ duration: 0.5 }}
                       />
                     </div>
-                    <div className="text-xs text-slate-400 mt-1">{agent.progress}%</div>
+                    <div className="text-xs text-gray-400 mt-1">{agent.progress}%</div>
                   </div>
                 )}
               </div>
@@ -164,8 +164,8 @@ export function AgentStatus() {
 
       {/* Recent Activity */}
       {activities.length > 0 && (
-        <div className="mt-4 pt-4 border-t border-white/10">
-          <h4 className="text-xs font-semibold text-slate-400 mb-2">Recent Activity</h4>
+        <div className="mt-4 pt-4 border-t border-gray-800">
+          <h4 className="text-xs font-semibold text-gray-400 mb-2">Recent Activity</h4>
           <div className="space-y-1.5 max-h-32 overflow-y-auto">
             {activities.map((activity, index) => (
               <motion.div
@@ -181,10 +181,10 @@ export function AgentStatus() {
                   "bg-blue-500"
                 }`} />
                 <div className="flex-1 min-w-0">
-                  <div className="text-slate-300 truncate">
+                  <div className="text-gray-300 truncate">
                     <span className="font-medium">{activity.agent}</span>: {activity.action}
                   </div>
-                  <div className="text-slate-500 text-[10px]">
+                  <div className="text-gray-500 text-[10px]">
                     {Math.floor((Date.now() - activity.timestamp.getTime()) / 1000)}s ago
                   </div>
                 </div>

@@ -16,7 +16,7 @@ export function CTASection() {
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
             Ready to revolutionize your development workflow?
           </h2>
-          <p className="text-xl text-slate-400 mb-12">
+          <p className="text-xl text-gray-300 mb-12">
             Join 100+ developers building faster with AI-powered monorepos
           </p>
 
@@ -52,7 +52,7 @@ export function CTASection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-slate-400">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400">
             <div>
               Built by{" "}
               <a

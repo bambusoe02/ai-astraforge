@@ -83,12 +83,12 @@ helloWorld();`);
   };
 
   return (
-    <div className="h-full flex flex-col bg-gradient-to-br from-slate-900 to-slate-950 overflow-hidden">
+    <div className="h-full flex flex-col bg-gray-950 overflow-hidden">
       {/* Header - Compact on mobile */}
-      <div className="p-3 sm:p-4 border-b border-white/10 backdrop-blur-sm bg-white/5 flex-shrink-0">
+      <div className="p-3 sm:p-4 border-b border-gray-800 backdrop-blur-sm bg-gray-900/90 flex-shrink-0">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
           <div className="flex items-center gap-2 sm:gap-3">
-            <h2 className="text-lg sm:text-xl font-bold text-white">Code Editor</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-gray-100">Code Editor</h2>
             <div className="px-2 py-1 bg-purple-500/20 border border-purple-500/30 rounded text-xs text-purple-200">
               {currentPlatform?.label}
             </div>
@@ -96,7 +96,7 @@ helloWorld();`);
 
           <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
             {/* Platform Tabs - Compact on mobile */}
-            <div className="flex gap-1 bg-white/5 rounded-lg p-1 border border-white/10 w-full sm:w-auto">
+            <div className="flex gap-1 bg-gray-800/80 rounded-lg p-1 border border-gray-700 w-full sm:w-auto">
               {platforms.map((p) => (
                 <button
                   key={p.value}
@@ -104,7 +104,7 @@ helloWorld();`);
                   className={`flex-1 sm:flex-none px-2 sm:px-3 py-1.5 min-h-[44px] text-xs sm:text-sm rounded transition-all touch-manipulation ${
                     platform === p.value
                       ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white"
-                      : "text-slate-300 active:bg-white/5"
+                      : "text-gray-300 active:bg-gray-700/50"
                   }`}
                 >
                   {p.label}
@@ -124,7 +124,7 @@ helloWorld();`);
 
             <button
               onClick={handleCopy}
-              className="px-3 py-2 min-h-[44px] bg-white/5 border border-white/20 text-white rounded-lg active:bg-white/10 transition-all flex items-center gap-2 touch-manipulation"
+              className="px-3 py-2 min-h-[44px] bg-gray-800/80 border border-gray-700 text-gray-100 rounded-lg active:bg-gray-700/50 transition-all flex items-center gap-2 touch-manipulation"
               title="Copy code"
             >
               {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
@@ -133,7 +133,7 @@ helloWorld();`);
 
             <button
               onClick={handleDownload}
-              className="px-3 py-2 min-h-[44px] bg-white/5 border border-white/20 text-white rounded-lg active:bg-white/10 transition-all flex items-center gap-2 touch-manipulation"
+              className="px-3 py-2 min-h-[44px] bg-gray-800/80 border border-gray-700 text-gray-100 rounded-lg active:bg-gray-700/50 transition-all flex items-center gap-2 touch-manipulation"
               title="Download code"
             >
               <Download className="w-4 h-4" />
@@ -142,7 +142,7 @@ helloWorld();`);
 
             <button
               onClick={handleSave}
-              className="px-3 py-2 min-h-[44px] bg-white/5 border border-white/20 text-white rounded-lg active:bg-white/10 transition-all flex items-center gap-2 touch-manipulation"
+              className="px-3 py-2 min-h-[44px] bg-gray-800/80 border border-gray-700 text-gray-100 rounded-lg active:bg-gray-700/50 transition-all flex items-center gap-2 touch-manipulation"
               title="Save code"
             >
               {saved ? <Check className="w-4 h-4 text-green-400" /> : <Save className="w-4 h-4" />}

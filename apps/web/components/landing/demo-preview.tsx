@@ -17,7 +17,7 @@ export function DemoPreview() {
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
             See It In Action
           </h2>
-          <p className="text-xl text-slate-400">
+          <p className="text-xl text-gray-300">
             Interactive dashboard with real-time AI agents
           </p>
         </motion.div>
@@ -30,7 +30,7 @@ export function DemoPreview() {
           transition={{ duration: 0.8 }}
         >
           {/* Dashboard Mockup */}
-          <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-8 shadow-2xl">
+          <div className="backdrop-blur-xl bg-gray-900/80 border border-gray-800 rounded-2xl p-8 shadow-2xl">
             <div className="flex gap-2 mb-6">
               <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
               <div className="w-3 h-3 rounded-full bg-yellow-500/50"></div>
@@ -71,7 +71,7 @@ export function DemoPreview() {
               </div>
             </div>
             <div className="mt-2 text-center">
-              <p className="text-xs text-slate-400">Currently showing: Mock data and simulated agent responses</p>
+              <p className="text-xs text-gray-400">Currently showing: Mock data and simulated agent responses</p>
             </div>
 
             {/* CTA Button */}

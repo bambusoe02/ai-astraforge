@@ -5,11 +5,11 @@ import Link from "next/link";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-950 via-purple-950/20 to-slate-950">
-      {/* Animated Background Blobs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Animated Background Blobs - Reduced opacity */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         <motion.div
-          className="absolute -top-40 -right-40 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl"
+          className="absolute -top-40 -right-40 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.5, 0.3],
@@ -21,7 +21,7 @@ export function HeroSection() {
           }}
         />
         <motion.div
-          className="absolute -bottom-40 -left-40 w-96 h-96 bg-pink-500/30 rounded-full blur-3xl"
+          className="absolute -bottom-40 -left-40 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.5, 0.3],
@@ -34,7 +34,7 @@ export function HeroSection() {
           }}
         />
         <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.3, 1],
             opacity: [0.2, 0.4, 0.2],
@@ -74,7 +74,7 @@ export function HeroSection() {
           </motion.h1>
 
           <motion.p
-            className="text-xl md:text-2xl text-slate-400 mb-12 max-w-3xl mx-auto"
+            className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -111,7 +111,7 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-6 shadow-2xl">
+            <div className="backdrop-blur-xl bg-gray-900/80 border border-gray-800 rounded-2xl p-6 shadow-2xl">
               <div className="flex gap-2 mb-4">
                 <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
                 <div className="w-3 h-3 rounded-full bg-yellow-500/50"></div>

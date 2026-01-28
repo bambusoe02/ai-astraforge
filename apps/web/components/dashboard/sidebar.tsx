@@ -56,14 +56,14 @@ export function Sidebar({ activeView, onViewChange }: SidebarProps) {
 
       {/* Desktop Sidebar */}
       <motion.aside
-        className={`hidden lg:flex flex-col backdrop-blur-xl bg-white/5 border-r border-white/10 transition-all duration-300 ${
+        className={`hidden lg:flex flex-col backdrop-blur-xl bg-gray-950/95 border-r border-gray-800 transition-all duration-300 ${
           isCollapsed ? "w-20" : "w-72"
         }`}
         initial={false}
         animate={{ width: isCollapsed ? 80 : 288 }}
       >
         {/* Logo Section */}
-        <div className="p-4 lg:p-6 border-b border-white/10">
+        <div className="p-4 lg:p-6 border-b border-gray-800">
           <div className={`flex items-center gap-3 ${isCollapsed ? "justify-center" : ""}`}>
             <div className="w-12 h-12 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/50 flex-shrink-0">
               <span className="text-2xl">🌌</span>
@@ -104,7 +104,7 @@ export function Sidebar({ activeView, onViewChange }: SidebarProps) {
                   className={`w-full flex items-center gap-3 px-4 py-3 min-h-[44px] rounded-xl transition-all duration-300 touch-manipulation ${
                     isActive
                       ? `${gradientClass} text-white shadow-lg shadow-purple-500/50 scale-105`
-                      : "text-slate-300 lg:hover:bg-white/5 lg:hover:scale-102 active:bg-white/5"
+                      : "text-gray-300 lg:hover:bg-gray-800/50 lg:hover:scale-102 active:bg-gray-800/50"
                   } ${isCollapsed ? "justify-center" : ""}`}
                   title={isCollapsed ? item.tooltip : undefined}
                 >
@@ -136,7 +136,7 @@ export function Sidebar({ activeView, onViewChange }: SidebarProps) {
         </nav>
 
         {/* Agent Status */}
-        <div className="mt-auto border-t border-white/10 p-4">
+        <div className="mt-auto border-t border-gray-800 p-4">
           <AnimatePresence>
             {!isCollapsed && (
               <motion.div
@@ -177,13 +177,13 @@ export function Sidebar({ activeView, onViewChange }: SidebarProps) {
               onClick={() => setIsMobileOpen(false)}
             />
             <motion.aside
-              className="fixed left-0 top-0 bottom-0 w-72 max-w-[85vw] backdrop-blur-xl bg-white/5 border-r border-white/10 z-50 lg:hidden flex flex-col"
+              className="fixed left-0 top-0 bottom-0 w-72 max-w-[85vw] backdrop-blur-xl bg-gray-950/95 border-r border-gray-800 z-50 lg:hidden flex flex-col"
               initial={{ x: -288 }}
               animate={{ x: 0 }}
               exit={{ x: -288 }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
             >
-              <div className="p-4 border-b border-white/10">
+              <div className="p-4 border-b border-gray-800">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-purple-500/50">
                     <span className="text-2xl">🌌</span>
@@ -215,7 +215,7 @@ export function Sidebar({ activeView, onViewChange }: SidebarProps) {
                       className={`w-full flex items-center gap-3 px-4 py-3 min-h-[44px] rounded-xl transition-all duration-300 touch-manipulation ${
                         isActive
                           ? `${gradientClass} text-white shadow-lg shadow-purple-500/50`
-                          : "text-slate-300 active:bg-white/5"
+                          : "text-gray-300 active:bg-gray-800/50"
                       }`}
                     >
                       <Icon className="w-5 h-5" />
@@ -224,7 +224,7 @@ export function Sidebar({ activeView, onViewChange }: SidebarProps) {
                   );
                 })}
               </nav>
-              <div className="border-t border-white/10 p-4">
+              <div className="border-t border-gray-800 p-4">
                 <AgentStatus />
               </div>
             </motion.aside>

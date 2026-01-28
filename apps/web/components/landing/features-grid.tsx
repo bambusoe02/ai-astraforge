@@ -56,7 +56,7 @@ export function FeaturesGrid() {
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
             Everything You Need
           </h2>
-          <p className="text-xl text-slate-400">
+          <p className="text-xl text-gray-300">
             Powerful AI agents working together to build your app
           </p>
         </motion.div>
@@ -65,7 +65,7 @@ export function FeaturesGrid() {
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
-              className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all"
+              className="backdrop-blur-xl bg-gray-900/80 border border-gray-800 rounded-2xl p-8 hover:bg-gray-900/90 transition-all"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -74,15 +74,15 @@ export function FeaturesGrid() {
               <div className={`w-16 h-16 bg-gradient-to-br ${feature.gradient} rounded-xl flex items-center justify-center text-3xl mb-6 shadow-lg`}>
                 {feature.icon}
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">{feature.title}</h3>
-              <p className="text-slate-400 text-sm mb-6">{feature.subtitle}</p>
+              <h3 className="text-2xl font-bold text-gray-100 mb-2">{feature.title}</h3>
+              <p className="text-gray-300 text-sm mb-6">{feature.subtitle}</p>
               <ul className="space-y-4">
                 {feature.items.map((item) => (
                   <li key={item.name} className="flex items-start gap-3">
                     <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${feature.gradient} mt-2 flex-shrink-0`}></div>
                     <div>
-                      <div className="text-white font-medium">{item.name}</div>
-                      <div className="text-slate-400 text-sm">{item.desc}</div>
+                      <div className="text-gray-100 font-medium">{item.name}</div>
+                      <div className="text-gray-400 text-sm">{item.desc}</div>
                     </div>
                   </li>
                 ))}
