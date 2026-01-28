@@ -17,7 +17,7 @@ export function CodeEditor() {
 // This editor supports multi-file editing across platforms
 
 function helloWorld() {
-  console.log("Hello from AstraForge!");
+  // Your code will appear here
 }
 
 helloWorld();`);
@@ -97,7 +97,11 @@ helloWorld();`);
   };
 
   const handleRun = () => {
-    console.log("Running code:", code);
+    track("code_run_clicked", {
+      platform,
+      language,
+      code_length: code.length,
+    });
   };
 
   const handlePlatformChange = (newPlatform: string) => {

@@ -34,7 +34,7 @@ vercel
 2. **Connect to Vercel**:
    - Go to [vercel.com](https://vercel.com)
    - Click "Add New Project"
-   - Import your GitHub repository: `bambusoe02/ai-astraforage`
+   - Import your GitHub repository: `bambusoe02/ai-astraforge`
    - Configure:
      - **Framework Preset:** Next.js
      - **Root Directory:** `apps/web`

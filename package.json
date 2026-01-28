@@ -1,7 +1,7 @@
 {
   "name": "astraforge",
   "version": "1.0.0",
-  "description": "AI-Powered Polyglot Monorepo Factory + Self-Healing System",
+  "description": "AI-Powered Monorepo Factory (Web, API, Mobile, Extension) with specialized AI agents",
   "private": true,
   "packageManager": "npm@10.2.0",
   "workspaces": [

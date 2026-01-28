@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🌌 AstraForge: AI-Powered Polyglot Monorepo Factory
+# 🌌 AstraForge: AI-Powered Monorepo Factory
 
 *AI factory used by 100+ startups - Build full-stack apps across platforms in minutes*
 
@@ -23,7 +23,7 @@
 ### 🎨 Modern UI (2026 Design Trends)
 
 - **Glassmorphism**: Modern frosted glass effects with backdrop blur
-- **Gradient Overlays**: Beautiful color transitions and animated backgrounds
+- **Minimal Dark UI**: Clean, high-contrast design optimized for readability
 - **Micro-interactions**: Smooth animations and transitions
 - **Card-based Layout**: Clean, organized interface
 - **Dark Mode First**: Optimized for dark theme with perfect contrast
@@ -40,7 +40,7 @@ monorepo/
 ├── packages/
 │   ├── ai-agents/    # AI agent orchestration
 │   ├── ui/           # Shared UI components
-│   └── shared/       # Common utilities
+│   └── tsconfig/     # Shared TS configs (and eslint-config/)
 ```
 
 ### 🤖 AI Agents
@@ -77,7 +77,7 @@ npm install
 
 # Setup environment
 cp env.local.example .env.local
-# Edit .env.local with your API keys
+# Edit .env.local with your API keys (Anthropic recommended for demo)
 
 # Start development
 npm run dev
@@ -87,7 +87,7 @@ npm run dev
 
 See `env.local.example` for all required variables:
 
-- `ANTHROPIC_API_KEY` - Required for AI agents
+- `ANTHROPIC_API_KEY` - Recommended for AI agents (demo)
 - `DATABASE_URL` - PostgreSQL connection string
 - `NEXT_PUBLIC_API_URL` - API endpoint (default: http://localhost:8000)
 
