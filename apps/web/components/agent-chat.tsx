@@ -100,12 +100,16 @@ export function AgentChat() {
       <div className="flex-1 overflow-y-auto p-6 space-y-4">
         {messages.length === 0 && (
           <div className="flex items-center justify-center h-full">
-            <div className="text-center">
+            <div className="text-center max-w-md">
               <div className="w-20 h-20 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <span className="text-4xl">💬</span>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-2">Start a conversation</h3>
-              <p className="text-slate-400">Describe what you want to build</p>
+              <h3 className="text-xl font-semibold text-white mb-2">No messages yet</h3>
+              <p className="text-slate-400 mb-4">Start by describing your app idea</p>
+              <div className="text-sm text-slate-500 space-y-1">
+                <p>💡 Try: "Build a task management app"</p>
+                <p>💡 Try: "Create a social media platform"</p>
+              </div>
             </div>
           </div>
         )}
