@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { track } from "@vercel/analytics";
 
 export function CTASection() {
   return (
@@ -23,6 +24,9 @@ export function CTASection() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
             <Link
               href="/dashboard"
+              onClick={() => {
+                track("demo_clicked", { location: "cta" });
+              }}
               className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold text-lg shadow-lg shadow-purple-500/50 hover:shadow-xl hover:shadow-purple-500/50 transition-all transform hover:scale-105"
             >
               Start Building Now
@@ -31,6 +35,9 @@ export function CTASection() {
               href="https://github.com/bambusoe02/ai-astraforge"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                track("github_star_clicked", { location: "cta" });
+              }}
               className="px-8 py-4 bg-white/5 backdrop-blur-sm border border-white/20 text-white rounded-xl font-semibold text-lg hover:bg-white/10 transition-all"
             >
               Star on GitHub

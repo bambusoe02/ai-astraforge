@@ -32,12 +32,19 @@ export function AgentChat() {
     };
 
     setMessages((prev) => [...prev, userMessage]);
+    const messageText = input;
     setInput("");
     setIsLoading(true);
 
+    // Track message sent
+    track("agent_message_sent", {
+      message_length: messageText.length,
+      timestamp: new Date().toISOString(),
+    });
+
     try {
       const { mockApi } = await import("../lib/mock-data");
-      const responses = await mockApi.sendMessage(input);
+      const responses = await mockApi.sendMessage(messageText);
 
       responses.forEach((response, index) => {
         setTimeout(() => {

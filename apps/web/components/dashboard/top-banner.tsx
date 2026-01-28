@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Github, Home } from "lucide-react";
+import { track } from "@vercel/analytics";
 
 export function TopBanner() {
   return (
@@ -22,6 +23,9 @@ export function TopBanner() {
             href="https://github.com/bambusoe02/ai-astraforge"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => {
+              track("github_star_clicked", { location: "top_banner" });
+            }}
             className="flex-1 sm:flex-none px-3 py-2 min-h-[44px] text-xs sm:text-sm bg-gray-800/80 backdrop-blur-sm border border-gray-700 text-gray-100 rounded-lg active:bg-gray-700/50 transition-all flex items-center justify-center gap-2 touch-manipulation"
           >
             <Github className="w-4 h-4" />

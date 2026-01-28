@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageSquare, Code, BarChart3, Menu, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { track } from "@vercel/analytics";
 import { AgentStatus } from "../agent-status";
 
 interface SidebarProps {
@@ -100,7 +101,10 @@ export function Sidebar({ activeView, onViewChange }: SidebarProps) {
             return (
               <div key={item.id} className="relative group">
                 <button
-                  onClick={() => onViewChange(item.id)}
+                  onClick={() => {
+                    onViewChange(item.id);
+                    track("dashboard_view_changed", { view: item.id });
+                  }}
                   className={`w-full flex items-center gap-3 px-4 py-3 min-h-[44px] rounded-xl transition-all duration-300 touch-manipulation ${
                     isActive
                       ? `${gradientClass} text-white shadow-lg shadow-purple-500/50 scale-105`

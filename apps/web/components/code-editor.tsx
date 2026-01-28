@@ -4,6 +4,7 @@ import { useState } from "react";
 import Editor from "@monaco-editor/react";
 import { Copy, Download, Play, Save, Sparkles, Check } from "lucide-react";
 import { motion } from "framer-motion";
+import { track } from "@vercel/analytics";
 
 const platforms = [
   { value: "nextjs", label: "Next.js", language: "typescript" },
@@ -37,8 +38,19 @@ helloWorld();`);
       const generatedCode = await mockApi.generateCode(platform);
       setCode(generatedCode.code);
       setLanguage(generatedCode.language);
+      
+      // Track code generation
+      track("code_generated", {
+        platform: platform,
+        language: generatedCode.language,
+        code_length: generatedCode.code.length,
+      });
     } catch (error) {
       console.error("Error generating code:", error);
+      track("code_generation_error", {
+        platform: platform,
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
     } finally {
       setIsGenerating(false);
     }
@@ -48,6 +60,12 @@ helloWorld();`);
     await navigator.clipboard.writeText(code);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+    
+    // Track copy action
+    track("code_copied", {
+      platform: platform,
+      code_length: code.length,
+    });
   };
 
   const handleDownload = () => {
@@ -61,6 +79,14 @@ helloWorld();`);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    
+    // Track download
+    track("code_downloaded", {
+      platform: platform,
+      language: language,
+      extension: extension,
+      code_length: code.length,
+    });
   };
 
   const handleSave = async () => {
