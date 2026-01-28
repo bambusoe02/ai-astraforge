@@ -1,11 +1,25 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { AgentChat } from "./agent-chat";
-import { CodeEditor } from "./code-editor";
 import { ProjectStatus } from "./project-status";
 import { Sidebar } from "./dashboard/sidebar";
 import { TopBanner } from "./dashboard/top-banner";
+import { SkeletonLoader } from "./skeleton-loader";
+
+// Dynamic import for heavy CodeEditor component (Monaco Editor)
+const CodeEditor = dynamic(() => import("./code-editor").then(mod => ({ default: mod.CodeEditor })), {
+  loading: () => (
+    <div className="h-full flex items-center justify-center p-6">
+      <div className="w-full space-y-4">
+        <SkeletonLoader className="h-12" />
+        <SkeletonLoader className="h-96" />
+      </div>
+    </div>
+  ),
+  ssr: false, // Monaco Editor doesn't work with SSR
+});
 
 export function Dashboard() {
   const [activeView, setActiveView] = useState<"chat" | "editor" | "status">("chat");

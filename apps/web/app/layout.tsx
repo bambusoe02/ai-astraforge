@@ -5,7 +5,13 @@ import { Analytics } from "@vercel/analytics/react";
 import { cn } from "@astraforge/ui";
 import "../styles/globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+// Optimize font loading
+const inter = Inter({ 
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   title: "AstraForge - AI-Powered Monorepo Factory",
@@ -40,7 +46,7 @@ export default function RootLayout({
   // Demo mode without authentication (Clerk disabled for demo)
   return (
     <html lang="en" className="dark">
-      <body className={cn(inter.className)}>
+      <body className={cn(inter.className, inter.variable)}>
         {content}
       </body>
     </html>
