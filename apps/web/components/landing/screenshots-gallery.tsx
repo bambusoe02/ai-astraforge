@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Maximize2 } from "lucide-react";
@@ -34,6 +34,24 @@ const screenshots = [
 
 export function ScreenshotsGallery() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedImage === null) return;
+
+      if (e.key === "Escape") {
+        setSelectedImage(null);
+      } else if (e.key === "ArrowLeft" && selectedImage > 0) {
+        setSelectedImage(selectedImage - 1);
+      } else if (e.key === "ArrowRight" && selectedImage < screenshots.length - 1) {
+        setSelectedImage(selectedImage + 1);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedImage]);
 
   return (
     <>
