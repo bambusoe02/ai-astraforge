@@ -6,22 +6,25 @@ import { Button } from "@astraforge/ui";
 
 export function HeroSection() {
   return (
-    <section className="min-h-screen bg-gray-950 flex items-center justify-center">
-      <div className="container mx-auto px-4 text-center">
+    <section className="relative min-h-screen bg-gray-950 flex items-center justify-center overflow-hidden">
+      {/* Readability overlay (protects against bright gradients / glow) */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-black/40" />
+
+      <div className="relative container mx-auto px-4 text-center">
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 border border-gray-800 rounded-full mb-8">
-          <span className="text-gray-400">🤖 AI-Powered Monorepo Factory</span>
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900/90 border border-gray-800 rounded-full mb-8">
+          <span className="text-gray-300">🤖 AI-Powered Monorepo Factory</span>
         </div>
 
         {/* Headline */}
-        <h1 className="text-6xl md:text-8xl font-bold text-white mb-6">
+        <h1 className="text-6xl md:text-8xl font-bold text-white mb-6 drop-shadow-[0_10px_30px_rgba(0,0,0,0.65)]">
           Stop Building Apps
           <br />
           One Platform at a Time
         </h1>
 
         {/* Subheading */}
-        <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-12">
+        <p className="text-xl text-gray-200 max-w-2xl mx-auto mb-12 drop-shadow-[0_6px_18px_rgba(0,0,0,0.55)]">
           Generate production-ready monorepos across Web, API, Mobile, Extension in minutes, not months
         </p>
 
