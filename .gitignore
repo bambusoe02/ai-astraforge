@@ -93,3 +93,6 @@ ENV/
 # Temporary files
 *.tmp
 *.temp
+
+# Turbo
+.turbo/
