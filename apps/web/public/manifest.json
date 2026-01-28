@@ -1,0 +1,36 @@
+{
+  "name": "AstraForge - AI-Powered Monorepo Factory",
+  "short_name": "AstraForge",
+  "description": "Generate production-ready applications across 4 platforms in 4 minutes using AI",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#111827",
+  "theme_color": "#8b5cf6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["developer", "productivity", "development"],
+  "screenshots": [
+    {
+      "src": "/screenshots/dashboard.png",
+      "sizes": "1600x900",
+      "type": "image/png"
+    }
+  ]
+}
+

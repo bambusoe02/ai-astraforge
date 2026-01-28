@@ -14,8 +14,93 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "AstraForge - AI-Powered Monorepo Factory",
-  description: "Build full-stack applications across platforms with AI agents",
+  title: {
+    default: "AstraForge - AI-Powered Monorepo Factory",
+    template: "%s | AstraForge",
+  },
+  description: "Generate production-ready applications across 4 platforms in 4 minutes using AI. 5 specialized agents handle everything from architecture to deployment.",
+  keywords: [
+    "AI code generation",
+    "monorepo",
+    "Next.js",
+    "FastAPI",
+    "React Native",
+    "AI agents",
+    "LangGraph",
+    "Turborepo",
+    "code automation",
+    "full-stack development",
+    "cross-platform",
+    "AI-powered development",
+    "automated code generation",
+    "monorepo factory",
+    "production-ready code",
+  ],
+  authors: [{ name: "Marcin Baran", url: "https://github.com/bambusoe02" }],
+  creator: "Marcin Baran",
+  publisher: "AstraForge",
+  metadataBase: new URL("https://ai-astraforge.vercel.app"),
+  alternates: {
+    canonical: "/",
+  },
+  
+  // Open Graph
+  openGraph: {
+    title: "AstraForge - AI-Powered Monorepo Factory",
+    description: "Build full-stack apps across 4 platforms in 4 minutes with AI. Generate production-ready code with 5 specialized AI agents.",
+    url: "https://ai-astraforge.vercel.app",
+    siteName: "AstraForge",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "AstraForge Dashboard Preview - AI-Powered Monorepo Factory",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  
+  // Twitter
+  twitter: {
+    card: "summary_large_image",
+    title: "AstraForge - AI-Powered Monorepo Factory",
+    description: "Build full-stack apps in 4 minutes with AI. Generate production-ready code across Web, API, Mobile, and Extension.",
+    creator: "@bambusoe02",
+    images: ["/og-image.png"],
+  },
+  
+  // Icons
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+  
+  // Robots
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  
+  // Manifest
+  manifest: "/manifest.json",
+  
+  // Category
+  category: "technology",
 };
 
 // Check if Clerk keys are available (only at runtime, not build time)
@@ -46,6 +131,9 @@ export default function RootLayout({
   // Demo mode without authentication (Clerk disabled for demo)
   return (
     <html lang="en" className="dark">
+      <head>
+        <link rel="canonical" href="https://ai-astraforge.vercel.app" />
+      </head>
       <body className={cn(inter.className, inter.variable)}>
         {content}
       </body>
