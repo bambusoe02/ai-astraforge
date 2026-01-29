@@ -74,14 +74,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const apiKey = process.env.ANTHROPIC_API_KEY;
-    
-    // Determine language based on platform
+    // Determine language based on platform (defined outside try-catch for error handling)
     const languages: Record<string, string> = {
       nextjs: 'typescript',
       fastapi: 'python',
       mobile: 'typescript',
     };
+
+    const apiKey = process.env.ANTHROPIC_API_KEY;
     
     if (!apiKey) {
       console.error('ANTHROPIC_API_KEY is not set');
