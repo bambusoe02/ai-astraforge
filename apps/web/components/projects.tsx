@@ -20,27 +20,47 @@ export function Projects() {
   const [newProjectName, setNewProjectName] = useState("");
   const [showConfirmClear, setShowConfirmClear] = useState(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleCreateProject = () => {
-    if (!newProjectName.trim()) return;
+    if (!newProjectName.trim()) {
+      setError("Project name cannot be empty");
+      return;
+    }
 
-    const projectId = createProject(newProjectName.trim());
-    setNewProjectName("");
-    setIsCreating(false);
-    
-    track("project_created", { projectId });
+    try {
+      const projectId = createProject(newProjectName.trim());
+      setNewProjectName("");
+      setIsCreating(false);
+      setError(null);
+      track("project_created", { projectId });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to create project");
+    }
   };
 
   const handleDeleteProject = (projectId: string) => {
-    deleteProject(projectId);
-    setShowConfirmDelete(null);
-    track("project_deleted", { projectId });
+    try {
+      deleteProject(projectId);
+      setShowConfirmDelete(null);
+      setError(null);
+      track("project_deleted", { projectId });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to delete project");
+      setShowConfirmDelete(null);
+    }
   };
 
   const handleClearProject = () => {
-    clearCurrentProject();
-    setShowConfirmClear(false);
-    track("project_cleared", { projectId: currentProjectId });
+    try {
+      clearCurrentProject();
+      setShowConfirmClear(false);
+      setError(null);
+      track("project_cleared", { projectId: currentProjectId });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to clear project");
+      setShowConfirmClear(false);
+    }
   };
 
   const currentProject = projects.find((p) => p.id === currentProjectId);
@@ -63,6 +83,29 @@ export function Projects() {
           </button>
         </div>
       </div>
+
+      {/* Error Display */}
+      <AnimatePresence>
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="p-4 bg-red-900/30 border-b border-red-700/50"
+          >
+            <div className="flex items-center justify-between">
+              <p className="text-red-200 text-sm">{error}</p>
+              <button
+                onClick={() => setError(null)}
+                className="text-red-300 hover:text-red-100 transition-colors"
+                aria-label="Dismiss error"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Create Project Form */}
       <AnimatePresence>
