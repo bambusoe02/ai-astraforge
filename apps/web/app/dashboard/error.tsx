@@ -67,7 +67,7 @@ export default function DashboardError({
         {/* Help Text */}
         <div className="pt-4 border-t border-gray-800">
           <p className="text-sm text-gray-500">
-            This is a demo mode. Full error handling will be available in production.
+            If this error persists, please check your ANTHROPIC_API_KEY environment variable.
           </p>
         </div>
       </div>

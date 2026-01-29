@@ -9,13 +9,13 @@ export function TopBanner() {
     <div className="sticky top-0 z-50 bg-gray-900/95 border-b border-gray-800 backdrop-blur-xl">
       <div className="container mx-auto px-4 sm:px-6 py-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-          <p className="text-xs sm:text-sm text-purple-200 flex items-center gap-2">
-            <span className="animate-pulse">🚧</span>
-            <span className="hidden sm:inline">Interactive Demo - Full API integration coming soon</span>
-            <span className="sm:hidden">Interactive Demo</span>
+          <p className="text-xs sm:text-sm text-green-200 flex items-center gap-2">
+            <span className="animate-pulse">✨</span>
+            <span className="hidden sm:inline">Production Mode - Powered by Claude Sonnet 4</span>
+            <span className="sm:hidden">Production Mode</span>
           </p>
           <p className="text-xs text-gray-400 hidden sm:inline">
-            Currently showing: Mock data and simulated agent responses
+            Real AI responses using Anthropic Claude API
           </p>
         </div>
         <div className="flex gap-2 w-full sm:w-auto">

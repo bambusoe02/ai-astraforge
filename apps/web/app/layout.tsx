@@ -117,9 +117,9 @@ export default function RootLayout({
   const content = (
     <>
       {!hasClerkKeys && (
-        <div className="bg-yellow-500/10 border-b border-yellow-500/20 p-2 text-center">
-          <p className="text-sm text-yellow-200">
-            🚧 Demo Mode - Authentication Disabled
+        <div className="bg-blue-500/10 border-b border-blue-500/20 p-2 text-center">
+          <p className="text-sm text-blue-200">
+            🔐 Authentication Disabled - Using Public Access
           </p>
         </div>
       )}

@@ -66,12 +66,12 @@ export function DemoPreview() {
 
             {/* Badge */}
             <div className="mt-6 flex items-center justify-center">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20">
-                <span className="text-sm text-yellow-200">🚧 Interactive Demo - Full API integration coming soon</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20">
+                <span className="text-sm text-green-200">✨ Production Mode - Powered by Claude Sonnet 4</span>
               </div>
             </div>
             <div className="mt-2 text-center">
-              <p className="text-xs text-gray-400">Currently showing: Mock data and simulated agent responses</p>
+              <p className="text-xs text-gray-400">Real AI responses using Anthropic Claude API</p>
             </div>
 
             {/* CTA Button */}
