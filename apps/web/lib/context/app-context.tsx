@@ -72,6 +72,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     try {
       const savedProjects = localStorage.getItem(STORAGE_KEY_PROJECTS);
+      let loadedProjects: Project[] = [];
+      
       if (savedProjects) {
         const parsed = JSON.parse(savedProjects) as Array<{
           id: string;
@@ -88,7 +90,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           updatedAt: string;
         }>;
         
-        const loadedProjects: Project[] = parsed.map((p) => ({
+        loadedProjects = parsed.map((p) => ({
           ...p,
           messages: p.messages.map((msg) => ({
             ...msg,
