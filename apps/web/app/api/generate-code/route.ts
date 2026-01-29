@@ -53,6 +53,15 @@ Generate a complete, working screen or component.`,
 };
 
 export async function POST(request: NextRequest) {
+  // Determine language based on platform (defined outside try-catch for error handling)
+  const languages: Record<string, string> = {
+    nextjs: 'typescript',
+    fastapi: 'python',
+    mobile: 'typescript',
+  };
+  
+  let platform: string = 'nextjs'; // Default platform
+
   try {
     // Get client IP for rate limiting
     const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
@@ -65,7 +74,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { platform, prompt } = await request.json();
+    const body = await request.json();
+    platform = body.platform || 'nextjs';
+    const prompt = body.prompt;
 
     if (!platform || typeof platform !== 'string') {
       return NextResponse.json(
@@ -73,13 +84,6 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-
-    // Determine language based on platform (defined outside try-catch for error handling)
-    const languages: Record<string, string> = {
-      nextjs: 'typescript',
-      fastapi: 'python',
-      mobile: 'typescript',
-    };
 
     const apiKey = process.env.ANTHROPIC_API_KEY;
     
