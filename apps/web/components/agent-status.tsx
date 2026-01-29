@@ -87,8 +87,8 @@ export function AgentStatus() {
 
     loadAgentStatus();
     
-    // Refresh agent status every 30 seconds
-    const interval = setInterval(loadAgentStatus, 30000);
+    // Refresh agent status every 5 seconds for real-time updates
+    const interval = setInterval(loadAgentStatus, 5000);
     return () => clearInterval(interval);
   }, []);
 

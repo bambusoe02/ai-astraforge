@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { updateAgentStatus } from '@/lib/agent-status-store';
 
 // Rate limiting: simple in-memory store (use Redis in production)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -82,7 +83,14 @@ export async function POST(request: NextRequest) {
       
       User request: ${message}
       
-      Respond with code only, no explanations unless specifically asked.`,
+      IMPORTANT: Always format your code response in markdown code blocks with the appropriate language identifier (tsx, typescript, python, etc.).
+      Example format:
+      \`\`\`tsx
+      // Your code here
+      \`\`\`
+      
+      If the user asks for code, provide the code in a code block. If they ask for explanations, provide both explanation and code in code blocks.
+      Determine the appropriate language based on the user's request (TypeScript/TSX for web/mobile, Python for API, etc.).`,
       
       tester: `You are an expert QA engineer. Your role is to create comprehensive test suites and identify potential bugs.
       Provide:
@@ -119,26 +127,39 @@ export async function POST(request: NextRequest) {
     };
 
     const systemPrompt = agentPrompts[agentType || 'coder'] || agentPrompts.coder;
+    const selectedAgent = agentType || 'coder';
 
-    const response = await anthropic.messages.create({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 2000,
-      messages: [
-        {
-          role: 'user',
-          content: systemPrompt,
-        },
-      ],
-    });
+    // Update agent status to 'busy' when processing
+    updateAgentStatus(selectedAgent, 'busy', 'Processing request...');
 
-    const content = response.content[0];
-    const text = content.type === 'text' ? content.text : '';
+    try {
+      const response = await anthropic.messages.create({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        messages: [
+          {
+            role: 'user',
+            content: systemPrompt,
+          },
+        ],
+      });
 
-    return NextResponse.json({
-      message: text,
-      agent: agentType || 'coder',
-      timestamp: new Date().toISOString(),
-    });
+      const content = response.content[0];
+      const text = content.type === 'text' ? content.text : '';
+
+      // Update agent status to 'active' after successful response
+      updateAgentStatus(selectedAgent, 'active', 'Ready for next task');
+
+      return NextResponse.json({
+        message: text,
+        agent: selectedAgent,
+        timestamp: new Date().toISOString(),
+      });
+    } catch (error) {
+      // Update agent status to 'idle' on error
+      updateAgentStatus(selectedAgent, 'idle', 'Error occurred, ready to retry');
+      throw error;
+    }
   } catch (error) {
     console.error('Error in chat API:', error);
     

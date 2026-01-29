@@ -103,23 +103,45 @@ helloWorld();`,
 
   // Extract code blocks from message content
   const extractCodeFromMessage = useCallback((content: string): { code: string; language: string; platform: "nextjs" | "fastapi" | "mobile" } | null => {
-    // Match code blocks: ```language\ncode\n```
-    const codeBlockRegex = /```(\w+)?\n([\s\S]*?)```/g;
+    if (!content) return null;
+    
+    // Match code blocks: ```language\ncode\n``` or ```language code ```
+    // Handles both single-line and multi-line code blocks
+    const codeBlockRegex = /```(\w+)?\s*\n?([\s\S]*?)```/g;
     const matches = Array.from(content.matchAll(codeBlockRegex));
     
     if (matches.length > 0) {
       // Get the last code block (most recent)
       const lastMatch = matches[matches.length - 1];
-      const language = lastMatch[1] || "typescript";
-      const code = lastMatch[2].trim();
+      let language = (lastMatch[1] || "typescript").toLowerCase();
+      let code = lastMatch[2].trim();
       
-      // Determine platform based on language
+      // Normalize language identifiers
+      if (language === "ts" || language === "tsx") {
+        language = "typescript";
+      } else if (language === "py") {
+        language = "python";
+      } else if (language === "js" || language === "jsx") {
+        language = "javascript";
+      }
+      
+      // Determine platform based on language and code content
       let platform: "nextjs" | "fastapi" | "mobile" = "nextjs";
+      
       if (language === "python" || language === "py") {
         platform = "fastapi";
-      } else if (language === "typescript" || language === "ts" || language === "tsx") {
+      } else if (language === "typescript" || language === "tsx" || language === "javascript" || language === "jsx") {
         // Check if it's React Native code
-        if (code.includes("react-native") || code.includes("import { View") || code.includes("from 'react-native'")) {
+        const codeLower = code.toLowerCase();
+        if (
+          codeLower.includes("react-native") ||
+          codeLower.includes("from 'react-native'") ||
+          codeLower.includes('from "react-native"') ||
+          codeLower.includes("import { view") ||
+          codeLower.includes("import { text") ||
+          codeLower.includes("react-native/") ||
+          codeLower.includes("expo")
+        ) {
           platform = "mobile";
         } else {
           platform = "nextjs";
