@@ -87,6 +87,20 @@ const nextConfig = {
       };
     }
 
+    // Ignore problematic zod helper in @anthropic-ai/sdk
+    config.resolve.alias = {
+      ...config.resolve.alias,
+    };
+    
+    // Mark @anthropic-ai/sdk as external for server builds
+    if (isServer) {
+      config.externals = config.externals || [];
+      if (typeof config.externals === 'string') {
+        config.externals = [config.externals];
+      }
+      config.externals.push('@anthropic-ai/sdk');
+    }
+
     return config;
   },
 

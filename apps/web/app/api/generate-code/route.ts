@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Anthropic from '@anthropic-ai/sdk';
 
 // Rate limiting
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -84,6 +83,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Use require to avoid Next.js bundling issues with zod helpers
+    const Anthropic = require('@anthropic-ai/sdk').default;
     const anthropic = new Anthropic({ apiKey });
 
     const platformPrompt = platformPrompts[platform] || platformPrompts.nextjs;
