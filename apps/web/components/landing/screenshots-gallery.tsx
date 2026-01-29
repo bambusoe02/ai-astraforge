@@ -85,28 +85,14 @@ export function ScreenshotsGallery() {
               >
                 <div className="relative overflow-hidden rounded-lg border border-gray-800 shadow-2xl group-hover:border-purple-500/50 transition-all">
                   <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 to-purple-500/0 group-hover:from-purple-500/10 group-hover:to-pink-500/10 transition-all z-10" />
-                  <div className="relative aspect-video bg-gray-900/50 flex items-center justify-center overflow-hidden">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-center p-8">
-                        <div className="w-16 h-16 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                          <span className="text-4xl">📸</span>
-                        </div>
-                        <p className="text-gray-400 text-sm">Screenshot placeholder</p>
-                        <p className="text-gray-500 text-xs mt-2">{screenshot.alt}</p>
-                      </div>
-                    </div>
+                  <div className="relative aspect-video bg-gray-900/50 overflow-hidden">
                     <Image
                       src={screenshot.src}
                       alt={screenshot.alt}
                       width={800}
                       height={600}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      placeholder="blur"
-                      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//9k="
-                      onError={(e) => {
-                        // Hide image on error, show placeholder
-                        e.currentTarget.style.display = 'none';
-                      }}
+                      priority={index < 2}
                     />
                   </div>
                   <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity z-20">
