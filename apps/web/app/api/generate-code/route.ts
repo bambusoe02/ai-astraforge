@@ -84,6 +84,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Use require to avoid Next.js bundling issues with zod helpers
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const Anthropic = require('@anthropic-ai/sdk').default;
     const anthropic = new Anthropic({ apiKey });
 
@@ -127,10 +128,11 @@ Generate the code now. Return ONLY the code, no explanations or markdown formatt
   } catch (error) {
     console.error('Error in generate-code API:', error);
     
-    if (error instanceof Anthropic.APIError) {
+    // Check if error is Anthropic APIError
+    if (error && typeof error === 'object' && 'status' in error && 'message' in error) {
       return NextResponse.json(
-        { error: `Anthropic API error: ${error.message}` },
-        { status: error.status || 500 }
+        { error: `Anthropic API error: ${String(error.message)}` },
+        { status: typeof error.status === 'number' ? error.status : 500 }
       );
     }
 
