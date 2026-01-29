@@ -41,9 +41,16 @@ const getStatusColor = (status: string) => {
   }
 };
 
+interface Activity {
+  agent: string;
+  message: string;
+  time: string;
+  status: 'success' | 'info' | 'warning' | 'error';
+}
+
 export function ProjectStatus() {
   const [projects, setProjects] = useState<Project[]>([]);
-  const [activity, setActivity] = useState<any[]>([]);
+  const [activity, setActivity] = useState<Activity[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

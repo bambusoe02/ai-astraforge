@@ -50,9 +50,15 @@ helloWorld();`,
     try {
       const savedMessages = localStorage.getItem(STORAGE_KEY_MESSAGES);
       if (savedMessages) {
-        const parsed = JSON.parse(savedMessages);
+        const parsed = JSON.parse(savedMessages) as Array<{
+          id: string;
+          role: "user" | "agent";
+          content: string;
+          agent?: "architect" | "coder" | "tester" | "deployer" | "monitor";
+          timestamp: string;
+        }>;
         setMessages(
-          parsed.map((msg: any) => ({
+          parsed.map((msg) => ({
             ...msg,
             timestamp: new Date(msg.timestamp),
           }))
