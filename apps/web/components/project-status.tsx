@@ -49,10 +49,10 @@ export function ProjectStatus() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const { mockApi } = await import("../lib/mock-data");
+        const { api } = await import("../lib/api");
         const [projectsData, activityData] = await Promise.all([
-          mockApi.getProjects(),
-          mockApi.getAgentActivity(),
+          api.getProjects(),
+          api.getAgentActivity(),
         ]);
         
         setProjects(projectsData);

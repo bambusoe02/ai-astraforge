@@ -44,26 +44,30 @@ export function AgentChat() {
     });
 
     try {
-      const { mockApi } = await import("../lib/mock-data");
-      const responses = await mockApi.sendMessage(messageText);
+      const { api } = await import("../lib/api");
+      const responses = await api.sendMessage(messageText);
 
-      responses.forEach((response, index) => {
-        setTimeout(() => {
-          const agentMessage: Message = {
-            id: `${Date.now()}-${response.agent}-${index}`,
-            role: "agent",
-            content: response.message,
-            agent: response.agent as "architect" | "coder" | "tester" | "deployer" | "monitor",
-            timestamp: response.timestamp,
-          };
-          setMessages((prev) => [...prev, agentMessage]);
-          if (index === responses.length - 1) {
-            setIsLoading(false);
-          }
-        }, (index + 1) * 1000);
+      responses.forEach((response) => {
+        const agentMessage: Message = {
+          id: `${Date.now()}-${response.agent}`,
+          role: "agent",
+          content: response.message,
+          agent: response.agent as "architect" | "coder" | "tester" | "deployer" | "monitor",
+          timestamp: new Date(response.timestamp),
+        };
+        setMessages((prev) => [...prev, agentMessage]);
       });
+      setIsLoading(false);
     } catch (error) {
       console.error("Error sending message:", error);
+      // Show error message to user
+      const errorMessage: Message = {
+        id: `${Date.now()}-error`,
+        role: "agent",
+        content: `Sorry, I encountered an error: ${error instanceof Error ? error.message : "Unknown error"}. Please try again.`,
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, errorMessage]);
       setIsLoading(false);
     }
   };

@@ -62,11 +62,11 @@ export function AgentStatus() {
   useEffect(() => {
     const loadAgentStatus = async () => {
       try {
-        const { mockApi } = await import("../lib/mock-data");
-        const statusData = await mockApi.getAgentStatus();
+        const { api } = await import("../lib/api");
+        const statusData = await api.getAgentStatus();
         
         const agentsList: Agent[] = Object.entries(statusData).map(([key, status]) => ({
-          name: key.charAt(0).toUpperCase() + key.slice(1),
+          name: status.name || key.charAt(0).toUpperCase() + key.slice(1),
           status: status.status,
           icon: agentIcons[key] || "🤖",
           description: status.message,
@@ -75,7 +75,7 @@ export function AgentStatus() {
         
         setAgents(agentsList);
         
-        // Mock recent activities
+        // Recent activities (would come from real backend in production)
         const mockActivities: Activity[] = [
           { agent: "Architect", action: "Planned entire system architecture", timestamp: new Date(Date.now() - 120000), status: "success" },
           { agent: "Coder", action: "Generated production-ready code across platforms", timestamp: new Date(Date.now() - 60000), status: "info" },
@@ -93,6 +93,10 @@ export function AgentStatus() {
     };
 
     loadAgentStatus();
+    
+    // Refresh agent status every 30 seconds
+    const interval = setInterval(loadAgentStatus, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   if (isLoading) {

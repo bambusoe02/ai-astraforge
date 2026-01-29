@@ -34,8 +34,8 @@ helloWorld();`);
   const handleGenerateCode = async () => {
     setIsGenerating(true);
     try {
-      const { mockApi } = await import("../lib/mock-data");
-      const generatedCode = await mockApi.generateCode(platform);
+      const { api } = await import("../lib/api");
+      const generatedCode = await api.generateCode(platform);
       setCode(generatedCode.code);
       setLanguage(generatedCode.language);
       
@@ -47,6 +47,8 @@ helloWorld();`);
       });
     } catch (error) {
       console.error("Error generating code:", error);
+      // Show error in editor
+      setCode(`// Error generating code: ${error instanceof Error ? error.message : "Unknown error"}\n// Please check your API key and try again.`);
       track("code_generation_error", {
         platform: platform,
         error: error instanceof Error ? error.message : "Unknown error",
