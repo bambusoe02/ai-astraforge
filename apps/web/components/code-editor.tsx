@@ -92,10 +92,16 @@ helloWorld();`);
   };
 
   const handleSave = async () => {
-    const { simulateApiDelay } = await import("../lib/mock-data");
-    await simulateApiDelay(500);
+    // Simulate save delay
+    await new Promise(resolve => setTimeout(resolve, 500));
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
+    
+    // Track save action
+    track("code_saved", {
+      platform: platform,
+      code_length: code.length,
+    });
   };
 
   const handleRun = () => {
