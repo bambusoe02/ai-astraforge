@@ -75,10 +75,22 @@ export async function POST(request: NextRequest) {
     }
 
     const apiKey = process.env.ANTHROPIC_API_KEY;
+    
+    // Determine language based on platform
+    const languages: Record<string, string> = {
+      nextjs: 'typescript',
+      fastapi: 'python',
+      mobile: 'typescript',
+    };
+    
     if (!apiKey) {
       console.error('ANTHROPIC_API_KEY is not set');
       return NextResponse.json(
-        { error: 'API key not configured' },
+        { 
+          error: 'API key not configured. Please set ANTHROPIC_API_KEY in your environment variables.',
+          code: '',
+          language: languages[platform] || 'typescript',
+        },
         { status: 500 }
       );
     }
@@ -113,13 +125,6 @@ Generate the code now. Return ONLY the code, no explanations or markdown formatt
 
     // Clean up markdown code blocks if present
     code = code.replace(/^```[\w]*\n?/gm, '').replace(/```$/gm, '').trim();
-
-    // Determine language based on platform
-    const languages: Record<string, string> = {
-      nextjs: 'typescript',
-      fastapi: 'python',
-      mobile: 'typescript',
-    };
 
     return NextResponse.json({
       code,

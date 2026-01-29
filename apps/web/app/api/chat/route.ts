@@ -49,7 +49,12 @@ export async function POST(request: NextRequest) {
     if (!apiKey) {
       console.error('ANTHROPIC_API_KEY is not set');
       return NextResponse.json(
-        { error: 'API key not configured' },
+        { 
+          error: 'API key not configured. Please set ANTHROPIC_API_KEY in your environment variables.',
+          message: 'API key not configured. Please set ANTHROPIC_API_KEY in your environment variables.',
+          agent: agentType || 'coder',
+          timestamp: new Date().toISOString(),
+        },
         { status: 500 }
       );
     }
@@ -164,16 +169,29 @@ export async function POST(request: NextRequest) {
     console.error('Error in chat API:', error);
     
     // Check if error is Anthropic APIError
-    if (error && typeof error === 'object' && 'status' in error && 'message' in error) {
-      return NextResponse.json(
-        { error: `Anthropic API error: ${String(error.message)}` },
-        { status: typeof error.status === 'number' ? error.status : 500 }
-      );
+    let errorMessage = 'Internal server error';
+    let statusCode = 500;
+    
+    if (error && typeof error === 'object') {
+      if ('status' in error && 'message' in error) {
+        errorMessage = `Anthropic API error: ${String(error.message)}`;
+        statusCode = typeof error.status === 'number' ? error.status : 500;
+      } else if ('message' in error) {
+        errorMessage = String(error.message);
+      }
+    } else if (error instanceof Error) {
+      errorMessage = error.message;
     }
 
+    // Return error in consistent format that frontend expects
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { 
+        error: errorMessage,
+        message: errorMessage,
+        agent: 'coder',
+        timestamp: new Date().toISOString(),
+      },
+      { status: statusCode }
     );
   }
 }

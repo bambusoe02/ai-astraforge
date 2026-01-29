@@ -49,17 +49,31 @@ export function AgentChat() {
       const responses = await api.sendMessage(messageText);
 
       responses.forEach((response) => {
+        // Check if response has an error
+        if (response.error && !response.message) {
+          const errorMessage: Message = {
+            id: `${Date.now()}-error`,
+            role: "agent",
+            content: `❌ **Error**: ${response.error}\n\nPlease check your API configuration or try again later.`,
+            agent: (response.agent || "coder") as "architect" | "coder" | "tester" | "deployer" | "monitor",
+            timestamp: new Date(response.timestamp || Date.now()),
+          };
+          addMessage(errorMessage);
+          return;
+        }
+
         const agentMessage: Message = {
           id: `${Date.now()}-${response.agent}`,
           role: "agent",
-          content: response.message,
-          agent: response.agent as "architect" | "coder" | "tester" | "deployer" | "monitor",
+          content: response.message || response.error || "No response received",
+          agent: (response.agent || "coder") as "architect" | "coder" | "tester" | "deployer" | "monitor",
           timestamp: new Date(response.timestamp),
         };
         addMessage(agentMessage);
         
         // Check if response contains code and extract it
-        const extractedCode = extractCodeFromMessage(response.message);
+        const messageContent = response.message || "";
+        const extractedCode = extractCodeFromMessage(messageContent);
         if (extractedCode) {
           setCodeState({
             code: extractedCode.code,
@@ -77,11 +91,11 @@ export function AgentChat() {
       setIsLoading(false);
     } catch (error) {
       console.error("Error sending message:", error);
-      // Show error message to user
+      // Show user-friendly error message
       const errorMessage: Message = {
         id: `${Date.now()}-error`,
         role: "agent",
-        content: `Sorry, I encountered an error: ${error instanceof Error ? error.message : "Unknown error"}. Please try again.`,
+        content: `❌ **Error**: ${error instanceof Error ? error.message : "Unknown error"}\n\n💡 **Troubleshooting**:\n- Check if ANTHROPIC_API_KEY is set in environment variables\n- Verify your API key is valid\n- Check your internet connection\n- Try again in a moment`,
         timestamp: new Date(),
       };
       addMessage(errorMessage);
@@ -161,6 +175,8 @@ export function AgentChat() {
               className={`max-w-[85%] sm:max-w-[70%] rounded-2xl px-3 sm:px-4 py-2 sm:py-3 backdrop-blur-sm ${
                 message.role === "user"
                   ? "bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/50"
+                  : message.content.includes("❌") || message.content.includes("Error")
+                  ? "bg-red-900/30 text-red-200 border border-red-700/50"
                   : "bg-gray-800/80 text-gray-200 border border-gray-700"
               }`}
             >
@@ -169,7 +185,14 @@ export function AgentChat() {
                   {message.agent}
                 </div>
               )}
-              <p className="text-xs sm:text-sm leading-relaxed break-words">{message.content}</p>
+              <div className="text-xs sm:text-sm leading-relaxed break-words whitespace-pre-wrap">
+                {message.content.split('\n').map((line, i) => {
+                  if (line.startsWith('💡') || line.startsWith('❌')) {
+                    return <div key={i} className="mt-1">{line}</div>;
+                  }
+                  return <div key={i}>{line}</div>;
+                })}
+              </div>
             </div>
 
             {message.role === "user" && (
@@ -182,18 +205,21 @@ export function AgentChat() {
 
         {isLoading && (
           <div className="flex gap-2 sm:gap-4 justify-start">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center animate-pulse">
               <span className="text-base sm:text-lg">🤖</span>
             </div>
             <div className="bg-gray-800/80 backdrop-blur-sm rounded-2xl px-3 sm:px-4 py-2 sm:py-3 border border-gray-700">
-              <div className="flex space-x-2">
-                {[0, 1, 2].map((i) => (
-                  <div
-                    key={i}
-                    className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"
-                    style={{ animationDelay: `${i * 0.1}s` }}
-                  ></div>
-                ))}
+              <div className="flex items-center gap-2">
+                <div className="flex space-x-2">
+                  {[0, 1, 2].map((i) => (
+                    <div
+                      key={i}
+                      className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"
+                      style={{ animationDelay: `${i * 0.1}s` }}
+                    ></div>
+                  ))}
+                </div>
+                <span className="text-xs sm:text-sm text-gray-400 ml-2">AI is thinking...</span>
               </div>
             </div>
           </div>

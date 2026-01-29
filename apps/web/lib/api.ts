@@ -2,7 +2,8 @@
 // Replaces mock-data.ts with real API calls
 
 export interface ChatMessage {
-  message: string;
+  message?: string;
+  error?: string;
   agent: string;
   timestamp: string;
 }
@@ -23,8 +24,25 @@ const API_BASE = process.env.NEXT_PUBLIC_API_URL || '/api';
 
 async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Unknown error' }));
-    throw new Error(error.error || `HTTP error! status: ${response.status}`);
+    let errorMessage = `HTTP error! status: ${response.status}`;
+    try {
+      const errorData = await response.json();
+      errorMessage = errorData.error || errorData.message || errorMessage;
+    } catch {
+      // If response is not JSON, use status text
+      errorMessage = response.statusText || errorMessage;
+    }
+    
+    // Provide helpful error messages
+    if (response.status === 500 && errorMessage.includes('API key')) {
+      errorMessage = 'API key not configured. Please set ANTHROPIC_API_KEY in your environment variables.';
+    } else if (response.status === 429) {
+      errorMessage = 'Rate limit exceeded. Please wait a moment and try again.';
+    } else if (response.status === 401 || response.status === 403) {
+      errorMessage = 'Authentication failed. Please check your API key.';
+    }
+    
+    throw new Error(errorMessage);
   }
   return response.json();
 }
