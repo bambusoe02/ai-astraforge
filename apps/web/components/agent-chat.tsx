@@ -24,7 +24,19 @@ export function AgentChat() {
   }, [messages]);
 
   const sendMessage = async () => {
+    // Input validation
     if (!input.trim()) return;
+    
+    if (input.length > 5000) {
+      const errorMessage: Message = {
+        id: `${Date.now()}-validation-error`,
+        role: "agent",
+        content: "❌ **Error**: Message is too long. Please keep messages under 5000 characters.",
+        timestamp: new Date(),
+      };
+      addMessage(errorMessage);
+      return;
+    }
 
     const userMessage: Message = {
       id: Date.now().toString(),

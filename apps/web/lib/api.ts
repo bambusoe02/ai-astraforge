@@ -62,7 +62,10 @@ export const api = {
       const data = await handleResponse<ChatMessage>(response);
       return [data];
     } catch (error) {
-      console.error('Error sending message:', error);
+      // Log errors in development, use proper logging service in production
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error sending message:', error);
+      }
       throw error;
     }
   },
@@ -80,7 +83,10 @@ export const api = {
 
       return handleResponse<CodeGenerationResponse>(response);
     } catch (error) {
-      console.error('Error generating code:', error);
+      // Log errors in development, use proper logging service in production
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error generating code:', error);
+      }
       throw error;
     }
   },
@@ -97,22 +103,26 @@ export const api = {
 
       return handleResponse<Record<string, AgentStatus>>(response);
     } catch (error) {
-      console.error('Error fetching agent status:', error);
+      // Log errors in development, use proper logging service in production
+      if (process.env.NODE_ENV === 'development') {
+        console.error('Error fetching agent status:', error);
+      }
       throw error;
     }
   },
 
-  // Get projects - returns empty array until real backend is connected
+  // Get projects
+  // NOTE: Currently returns empty array as projects are managed via localStorage in AppContext.
+  // Future: Connect to backend API when database integration is implemented.
+  // See: apps/web/lib/context/app-context.tsx for current project management.
   async getProjects() {
-    // TODO: Connect to real backend API
-    // For now, return empty array to show no fake data
     return [];
   },
 
-  // Get agent activity - returns empty array until real backend is connected
+  // Get agent activity
+  // NOTE: Currently returns empty array. Activity tracking will be implemented when
+  // backend API is connected. Agent status is available via getAgentStatus().
   async getAgentActivity() {
-    // TODO: Connect to real backend API
-    // For now, return empty array to show no fake data
     return [];
   },
 };

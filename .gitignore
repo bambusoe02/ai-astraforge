@@ -101,6 +101,8 @@ ENV/
 
 # Audit reports and documentation (local only)
 PROJECT_AUDIT_REPORT.md
+COMPREHENSIVE_AUDIT_REPORT.md
+*_AUDIT*.md
 *_MIGRATION.md
 VERCEL_*.md
 *_FIX.md

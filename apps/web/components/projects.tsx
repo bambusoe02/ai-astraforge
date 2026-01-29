@@ -21,6 +21,8 @@ export function Projects() {
   const [showConfirmClear, setShowConfirmClear] = useState(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState<string | null>(null);
+  const [isClearing, setIsClearing] = useState(false);
 
   const handleCreateProject = () => {
     if (!newProjectName.trim()) {
@@ -39,7 +41,8 @@ export function Projects() {
     }
   };
 
-  const handleDeleteProject = (projectId: string) => {
+  const handleDeleteProject = async (projectId: string) => {
+    setIsDeleting(projectId);
     try {
       deleteProject(projectId);
       setShowConfirmDelete(null);
@@ -48,10 +51,13 @@ export function Projects() {
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to delete project");
       setShowConfirmDelete(null);
+    } finally {
+      setIsDeleting(null);
     }
   };
 
-  const handleClearProject = () => {
+  const handleClearProject = async () => {
+    setIsClearing(true);
     try {
       clearCurrentProject();
       setShowConfirmClear(false);
@@ -60,6 +66,8 @@ export function Projects() {
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to clear project");
       setShowConfirmClear(false);
+    } finally {
+      setIsClearing(false);
     }
   };
 
@@ -278,9 +286,10 @@ export function Projects() {
               <div className="flex gap-3">
                 <button
                   onClick={handleClearProject}
-                  className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all"
+                  disabled={isClearing}
+                  className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Clear
+                  {isClearing ? "Clearing..." : "Clear"}
                 </button>
                 <button
                   onClick={() => setShowConfirmClear(false)}
@@ -318,9 +327,10 @@ export function Projects() {
               <div className="flex gap-3">
                 <button
                   onClick={() => handleDeleteProject(showConfirmDelete)}
-                  className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all"
+                  disabled={isDeleting === showConfirmDelete}
+                  className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Delete
+                  {isDeleting === showConfirmDelete ? "Deleting..." : "Delete"}
                 </button>
                 <button
                   onClick={() => setShowConfirmDelete(null)}
