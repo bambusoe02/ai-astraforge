@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { Dashboard } from "../../components/dashboard";
+import { AppProvider } from "../../lib/context/app-context";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -11,5 +12,9 @@ export const metadata: Metadata = {
 };
 
 export default function DashboardPage() {
-  return <Dashboard />;
+  return (
+    <AppProvider>
+      <Dashboard />
+    </AppProvider>
+  );
 }

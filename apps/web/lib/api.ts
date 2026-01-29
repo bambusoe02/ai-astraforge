@@ -84,56 +84,18 @@ export const api = {
     }
   },
 
-  // Get projects (placeholder - would connect to real backend)
+  // Get projects - returns empty array until real backend is connected
   async getProjects() {
-    // This would connect to your real backend API
-    // For now, return mock data structure
-    return [
-      {
-        name: 'Web Dashboard',
-        platform: 'Next.js',
-        status: 'success' as const,
-        lastBuild: '2 minutes ago',
-        tests: 95,
-        coverage: 87,
-      },
-      {
-        name: 'API Backend',
-        platform: 'FastAPI',
-        status: 'building' as const,
-        lastBuild: 'Building...',
-        tests: 92,
-        coverage: 91,
-      },
-      {
-        name: 'Mobile App',
-        platform: 'React Native',
-        status: 'warning' as const,
-        lastBuild: '5 minutes ago',
-        tests: 88,
-        coverage: 82,
-      },
-      {
-        name: 'Chrome Extension',
-        platform: 'Chrome',
-        status: 'success' as const,
-        lastBuild: '1 minute ago',
-        tests: 96,
-        coverage: 89,
-      },
-    ];
+    // TODO: Connect to real backend API
+    // For now, return empty array to show no fake data
+    return [];
   },
 
-  // Get agent activity (placeholder - would connect to real backend)
+  // Get agent activity - returns empty array until real backend is connected
   async getAgentActivity() {
-    // This would connect to your real backend API
-    // For now, return mock data structure
-    return [
-      { agent: 'Architect', message: 'Planned entire system architecture', time: '2m ago', status: 'success' },
-      { agent: 'Coder', message: 'Generated production-ready code across platforms', time: '1m ago', status: 'info' },
-      { agent: 'Tester', message: 'Caught 3 bugs before production', time: '30s ago', status: 'info' },
-      { agent: 'Deployer', message: 'Deploying with enterprise-grade CI/CD', time: 'now', status: 'info' },
-    ];
+    // TODO: Connect to real backend API
+    // For now, return empty array to show no fake data
+    return [];
   },
 };
 

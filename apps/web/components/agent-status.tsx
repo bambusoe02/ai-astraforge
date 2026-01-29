@@ -75,15 +75,8 @@ export function AgentStatus() {
         
         setAgents(agentsList);
         
-        // Recent activities (would come from real backend in production)
-        const mockActivities: Activity[] = [
-          { agent: "Architect", action: "Planned entire system architecture", timestamp: new Date(Date.now() - 120000), status: "success" },
-          { agent: "Coder", action: "Generated production-ready code across platforms", timestamp: new Date(Date.now() - 60000), status: "info" },
-          { agent: "Tester", action: "Caught 3 bugs before production", timestamp: new Date(Date.now() - 30000), status: "info" },
-          { agent: "Deployer", action: "Deploying with enterprise-grade CI/CD", timestamp: new Date(Date.now() - 10000), status: "info" },
-          { agent: "Monitor", action: "System health check passed", timestamp: new Date(Date.now() - 5000), status: "success" },
-        ];
-        setActivities(mockActivities.slice(0, 5));
+        // No mock activities - will be populated from real API when available
+        setActivities([]);
         
         setIsLoading(false);
       } catch (error) {

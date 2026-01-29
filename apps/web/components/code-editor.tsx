@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import { Copy, Download, Play, Save, Sparkles, Check } from "lucide-react";
 import { motion } from "framer-motion";
 import { track } from "@vercel/analytics";
+import { useApp } from "../lib/context/app-context";
 
 const platforms = [
   { value: "nextjs", label: "Next.js", language: "typescript" },
@@ -13,21 +14,27 @@ const platforms = [
 ];
 
 export function CodeEditor() {
-  const [code, setCode] = useState(`// Welcome to AstraForge Code Editor
-// This editor supports multi-file editing across platforms
-
-function helloWorld() {
-  // Your code will appear here
-}
-
-helloWorld();`);
-
-  const [platform, setPlatform] = useState("nextjs");
-  const [language, setLanguage] = useState("typescript");
+  const { codeState, setCodeState } = useApp();
+  const [platform, setPlatform] = useState(codeState.platform || "nextjs");
+  const [language, setLanguage] = useState(codeState.language || "typescript");
   const [theme] = useState("vs-dark");
   const [isGenerating, setIsGenerating] = useState(false);
   const [copied, setCopied] = useState(false);
   const [saved, setSaved] = useState(false);
+
+  // Sync platform and language with codeState
+  useEffect(() => {
+    if (codeState.platform && codeState.platform !== platform) {
+      setPlatform(codeState.platform);
+      const platformData = platforms.find((p) => p.value === codeState.platform);
+      if (platformData) {
+        setLanguage(platformData.language);
+      }
+    }
+    if (codeState.language && codeState.language !== language) {
+      setLanguage(codeState.language);
+    }
+  }, [codeState.platform, codeState.language]);
 
   const currentPlatform = platforms.find((p) => p.value === platform);
 
@@ -36,7 +43,11 @@ helloWorld();`);
     try {
       const { api } = await import("../lib/api");
       const generatedCode = await api.generateCode(platform);
-      setCode(generatedCode.code);
+      setCodeState({
+        code: generatedCode.code,
+        language: generatedCode.language,
+        platform: platform,
+      });
       setLanguage(generatedCode.language);
       
       // Track code generation
@@ -48,7 +59,11 @@ helloWorld();`);
     } catch (error) {
       console.error("Error generating code:", error);
       // Show error in editor
-      setCode(`// Error generating code: ${error instanceof Error ? error.message : "Unknown error"}\n// Please check your API key and try again.`);
+      setCodeState({
+        code: `// Error generating code: ${error instanceof Error ? error.message : "Unknown error"}\n// Please check your API key and try again.`,
+        language: language,
+        platform: platform,
+      });
       track("code_generation_error", {
         platform: platform,
         error: error instanceof Error ? error.message : "Unknown error",
@@ -59,20 +74,20 @@ helloWorld();`);
   };
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(code);
+    await navigator.clipboard.writeText(codeState.code);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
     
     // Track copy action
     track("code_copied", {
       platform: platform,
-      code_length: code.length,
+      code_length: codeState.code.length,
     });
   };
 
   const handleDownload = () => {
     const extension = language === "python" ? "py" : language === "typescript" ? "tsx" : "js";
-    const blob = new Blob([code], { type: "text/plain" });
+    const blob = new Blob([codeState.code], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -87,20 +102,19 @@ helloWorld();`);
       platform: platform,
       language: language,
       extension: extension,
-      code_length: code.length,
+      code_length: codeState.code.length,
     });
   };
 
   const handleSave = async () => {
-    // Simulate save delay
-    await new Promise(resolve => setTimeout(resolve, 500));
+    // Code is already saved in context/localStorage
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
     
     // Track save action
     track("code_saved", {
       platform: platform,
-      code_length: code.length,
+      code_length: codeState.code.length,
     });
   };
 
@@ -108,7 +122,7 @@ helloWorld();`);
     track("code_run_clicked", {
       platform,
       language,
-      code_length: code.length,
+      code_length: codeState.code.length,
     });
   };
 
@@ -117,6 +131,12 @@ helloWorld();`);
     const platformData = platforms.find((p) => p.value === newPlatform);
     if (platformData) {
       setLanguage(platformData.language);
+      // Update codeState platform
+      setCodeState({
+        ...codeState,
+        platform: newPlatform,
+        language: platformData.language,
+      });
     }
   };
 
@@ -202,12 +222,12 @@ helloWorld();`);
       {/* Editor - Horizontal scroll on mobile */}
       <div className="flex-1 overflow-hidden relative">
         <div className="absolute inset-0 overflow-x-auto">
-          <Editor
+            <Editor
             height="100%"
             language={language}
-            value={code}
+            value={codeState.code}
             theme={theme}
-            onChange={(value) => setCode(value || "")}
+            onChange={(value) => setCodeState({ ...codeState, code: value || "" })}
             options={{
               minimap: { enabled: false }, // Disable minimap on mobile
               fontSize: 12, // Smaller font on mobile

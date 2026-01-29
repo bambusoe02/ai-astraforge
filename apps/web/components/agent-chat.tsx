@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Send, Loader2 } from "lucide-react";
 import { track } from "@vercel/analytics";
+import { useApp } from "../lib/context/app-context";
 
 interface Message {
   id: string;
@@ -13,7 +14,7 @@ interface Message {
 }
 
 export function AgentChat() {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const { messages, addMessage, extractCodeFromMessage, setCodeState } = useApp();
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -32,7 +33,7 @@ export function AgentChat() {
       timestamp: new Date(),
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    addMessage(userMessage);
     const messageText = input;
     setInput("");
     setIsLoading(true);
@@ -55,7 +56,23 @@ export function AgentChat() {
           agent: response.agent as "architect" | "coder" | "tester" | "deployer" | "monitor",
           timestamp: new Date(response.timestamp),
         };
-        setMessages((prev) => [...prev, agentMessage]);
+        addMessage(agentMessage);
+        
+        // Check if response contains code and extract it
+        const extractedCode = extractCodeFromMessage(response.message);
+        if (extractedCode) {
+          setCodeState({
+            code: extractedCode.code,
+            language: extractedCode.language,
+            platform: extractedCode.platform,
+          });
+          
+          // Track code extraction
+          track("code_extracted_from_chat", {
+            language: extractedCode.language,
+            code_length: extractedCode.code.length,
+          });
+        }
       });
       setIsLoading(false);
     } catch (error) {
@@ -67,7 +84,7 @@ export function AgentChat() {
         content: `Sorry, I encountered an error: ${error instanceof Error ? error.message : "Unknown error"}. Please try again.`,
         timestamp: new Date(),
       };
-      setMessages((prev) => [...prev, errorMessage]);
+      addMessage(errorMessage);
       setIsLoading(false);
     }
   };
