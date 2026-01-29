@@ -58,14 +58,18 @@ const nextConfig = {
     ];
   },
 
-  // Rewrites for API
+  // Rewrites for API (only in development if external API is needed)
   async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: "http://localhost:8000/api/:path*",
-      },
-    ];
+    // Only use rewrites in development if external API URL is provided
+    if (process.env.NODE_ENV === 'development' && process.env.EXTERNAL_API_URL) {
+      return [
+        {
+          source: "/api/:path*",
+          destination: `${process.env.EXTERNAL_API_URL}/api/:path*`,
+        },
+      ];
+    }
+    return [];
   },
 
   // Webpack optimizations

@@ -109,8 +109,9 @@ User request: ${userPrompt}
 
 Generate the code now. Return ONLY the code, no explanations or markdown formatting.`;
 
+    const model = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-20250514';
     const response = await anthropic.messages.create({
-      model: 'claude-sonnet-4-20250514',
+      model,
       max_tokens: 3000,
       messages: [
         {
@@ -142,7 +143,11 @@ Generate the code now. Return ONLY the code, no explanations or markdown formatt
     }
 
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { 
+        error: 'Internal server error',
+        code: '',
+        language: languages[platform] || 'typescript',
+      },
       { status: 500 }
     );
   }

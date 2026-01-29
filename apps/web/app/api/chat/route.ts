@@ -138,8 +138,9 @@ export async function POST(request: NextRequest) {
     updateAgentStatus(selectedAgent, 'busy', 'Processing request...');
 
     try {
+      const model = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-20250514';
       const response = await anthropic.messages.create({
-        model: 'claude-sonnet-4-20250514',
+        model,
         max_tokens: 2000,
         messages: [
           {
