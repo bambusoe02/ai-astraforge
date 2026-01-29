@@ -99,5 +99,14 @@ ENV/
 .turbo/
 *.tsbuildinfo
 
-# Audit reports (local only)
+# Audit reports and documentation (local only)
 PROJECT_AUDIT_REPORT.md
+*_MIGRATION.md
+VERCEL_*.md
+*_FIX.md
+*_SETTINGS.md
+*_SOLUTION.md
+*_DEPLOY.md
+CACHE_FIX.md
+LOCAL_DEVELOPMENT.md
+PRODUCTION_SETUP.md
