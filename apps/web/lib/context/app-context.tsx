@@ -16,24 +16,41 @@ interface CodeState {
   platform: string;
 }
 
+interface Project {
+  id: string;
+  name: string;
+  messages: Message[];
+  codeState: CodeState;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 interface AppContextType {
+  // Current project data
   messages: Message[];
   addMessage: (message: Message) => void;
   clearMessages: () => void;
   codeState: CodeState;
   setCodeState: (code: CodeState) => void;
   extractCodeFromMessage: (content: string) => { code: string; language: string; platform: "nextjs" | "fastapi" | "mobile" } | null;
+  
+  // Project management
+  projects: Project[];
+  currentProjectId: string | null;
+  createProject: (name: string) => string;
+  switchProject: (projectId: string) => void;
+  deleteProject: (projectId: string) => void;
+  clearCurrentProject: () => void;
+  getCurrentProject: () => Project | null;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-const STORAGE_KEY_MESSAGES = "astraforge_messages";
-const STORAGE_KEY_CODE = "astraforge_code";
+const STORAGE_KEY_PROJECTS = "astraforge_projects";
+const STORAGE_KEY_CURRENT_PROJECT = "astraforge_current_project";
 
-export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [codeState, setCodeState] = useState<CodeState>({
-    code: `// Welcome to AstraForge Code Editor
+const defaultCodeState: CodeState = {
+  code: `// Welcome to AstraForge Code Editor
 // Code generated from chat will appear here
 
 function helloWorld() {
@@ -41,56 +58,115 @@ function helloWorld() {
 }
 
 helloWorld();`,
-    language: "typescript",
-    platform: "nextjs",
-  });
+  language: "typescript",
+  platform: "nextjs",
+};
 
-  // Load from localStorage on mount
+export function AppProvider({ children }: { children: React.ReactNode }) {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [codeState, setCodeState] = useState<CodeState>(defaultCodeState);
+
+  // Load projects and current project from localStorage on mount
   useEffect(() => {
     try {
-      const savedMessages = localStorage.getItem(STORAGE_KEY_MESSAGES);
-      if (savedMessages) {
-        const parsed = JSON.parse(savedMessages) as Array<{
+      const savedProjects = localStorage.getItem(STORAGE_KEY_PROJECTS);
+      if (savedProjects) {
+        const parsed = JSON.parse(savedProjects) as Array<{
           id: string;
-          role: "user" | "agent";
-          content: string;
-          agent?: "architect" | "coder" | "tester" | "deployer" | "monitor";
-          timestamp: string;
+          name: string;
+          messages: Array<{
+            id: string;
+            role: "user" | "agent";
+            content: string;
+            agent?: "architect" | "coder" | "tester" | "deployer" | "monitor";
+            timestamp: string;
+          }>;
+          codeState: CodeState;
+          createdAt: string;
+          updatedAt: string;
         }>;
-        setMessages(
-          parsed.map((msg) => ({
+        
+        const loadedProjects: Project[] = parsed.map((p) => ({
+          ...p,
+          messages: p.messages.map((msg) => ({
             ...msg,
             timestamp: new Date(msg.timestamp),
-          }))
-        );
+          })),
+          createdAt: new Date(p.createdAt),
+          updatedAt: new Date(p.updatedAt),
+        }));
+        
+        setProjects(loadedProjects);
       }
 
-      const savedCode = localStorage.getItem(STORAGE_KEY_CODE);
-      if (savedCode) {
-        setCodeState(JSON.parse(savedCode));
+      const savedCurrentProjectId = localStorage.getItem(STORAGE_KEY_CURRENT_PROJECT);
+      if (savedCurrentProjectId && loadedProjects.find((p) => p.id === savedCurrentProjectId)) {
+        setCurrentProjectId(savedCurrentProjectId);
+      } else if (loadedProjects.length > 0) {
+        // If no current project but projects exist, use first one
+        setCurrentProjectId(loadedProjects[0].id);
+        localStorage.setItem(STORAGE_KEY_CURRENT_PROJECT, loadedProjects[0].id);
       }
     } catch (error) {
       console.error("Error loading from localStorage:", error);
     }
   }, []);
 
-  // Save to localStorage whenever messages change
+  // Load current project data when project changes
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY_MESSAGES, JSON.stringify(messages));
-    } catch (error) {
-      console.error("Error saving messages to localStorage:", error);
+    if (currentProjectId && projects.length > 0) {
+      const project = projects.find((p) => p.id === currentProjectId);
+      if (project) {
+        setMessages(project.messages);
+        setCodeState(project.codeState);
+      }
+    } else if (!currentProjectId) {
+      setMessages([]);
+      setCodeState(defaultCodeState);
     }
-  }, [messages]);
+  }, [currentProjectId, projects]);
 
-  // Save to localStorage whenever code changes
+  // Save current project data whenever messages or codeState changes
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY_CODE, JSON.stringify(codeState));
-    } catch (error) {
-      console.error("Error saving code to localStorage:", error);
+    if (currentProjectId) {
+      setProjects((prevProjects) => {
+        const updatedProjects = prevProjects.map((p) =>
+          p.id === currentProjectId
+            ? {
+                ...p,
+                messages,
+                codeState,
+                updatedAt: new Date(),
+              }
+            : p
+        );
+        
+        // Save to localStorage
+        try {
+          localStorage.setItem(
+            STORAGE_KEY_PROJECTS,
+            JSON.stringify(
+              updatedProjects.map((p) => ({
+                ...p,
+                messages: p.messages.map((msg) => ({
+                  ...msg,
+                  timestamp: msg.timestamp.toISOString(),
+                })),
+                createdAt: p.createdAt.toISOString(),
+                updatedAt: p.updatedAt.toISOString(),
+              }))
+            )
+          );
+        } catch (error) {
+          console.error("Error saving projects to localStorage:", error);
+        }
+        
+        return updatedProjects;
+      });
     }
-  }, [codeState]);
+  }, [messages, codeState, currentProjectId]);
 
   const addMessage = useCallback((message: Message) => {
     setMessages((prev) => [...prev, message]);
@@ -98,8 +174,100 @@ helloWorld();`,
 
   const clearMessages = useCallback(() => {
     setMessages([]);
-    localStorage.removeItem(STORAGE_KEY_MESSAGES);
   }, []);
+
+  const createProject = useCallback((name: string): string => {
+    const newProject: Project = {
+      id: `project-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      name,
+      messages: [],
+      codeState: defaultCodeState,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    setProjects((prev) => {
+      const updated = [...prev, newProject];
+      try {
+        localStorage.setItem(
+          STORAGE_KEY_PROJECTS,
+          JSON.stringify(
+            updated.map((p) => ({
+              ...p,
+              messages: p.messages.map((msg) => ({
+                ...msg,
+                timestamp: msg.timestamp.toISOString(),
+              })),
+              createdAt: p.createdAt.toISOString(),
+              updatedAt: p.updatedAt.toISOString(),
+            }))
+          )
+        );
+      } catch (error) {
+        console.error("Error saving projects to localStorage:", error);
+      }
+      return updated;
+    });
+
+    setCurrentProjectId(newProject.id);
+    localStorage.setItem(STORAGE_KEY_CURRENT_PROJECT, newProject.id);
+    
+    return newProject.id;
+  }, []);
+
+  const switchProject = useCallback((projectId: string) => {
+    setCurrentProjectId(projectId);
+    localStorage.setItem(STORAGE_KEY_CURRENT_PROJECT, projectId);
+  }, []);
+
+  const deleteProject = useCallback((projectId: string) => {
+    setProjects((prev) => {
+      const updated = prev.filter((p) => p.id !== projectId);
+      try {
+        localStorage.setItem(
+          STORAGE_KEY_PROJECTS,
+          JSON.stringify(
+            updated.map((p) => ({
+              ...p,
+              messages: p.messages.map((msg) => ({
+                ...msg,
+                timestamp: msg.timestamp.toISOString(),
+              })),
+              createdAt: p.createdAt.toISOString(),
+              updatedAt: p.updatedAt.toISOString(),
+            }))
+          )
+        );
+      } catch (error) {
+        console.error("Error saving projects to localStorage:", error);
+      }
+      
+      // If deleted project was current, switch to first available or null
+      if (currentProjectId === projectId) {
+        if (updated.length > 0) {
+          setCurrentProjectId(updated[0].id);
+          localStorage.setItem(STORAGE_KEY_CURRENT_PROJECT, updated[0].id);
+        } else {
+          setCurrentProjectId(null);
+          localStorage.removeItem(STORAGE_KEY_CURRENT_PROJECT);
+        }
+      }
+      
+      return updated;
+    });
+  }, [currentProjectId]);
+
+  const clearCurrentProject = useCallback(() => {
+    if (currentProjectId) {
+      setMessages([]);
+      setCodeState(defaultCodeState);
+    }
+  }, [currentProjectId]);
+
+  const getCurrentProject = useCallback((): Project | null => {
+    if (!currentProjectId) return null;
+    return projects.find((p) => p.id === currentProjectId) || null;
+  }, [currentProjectId, projects]);
 
   // Extract code blocks from message content
   const extractCodeFromMessage = useCallback((content: string): { code: string; language: string; platform: "nextjs" | "fastapi" | "mobile" } | null => {
@@ -163,6 +331,13 @@ helloWorld();`,
         codeState,
         setCodeState,
         extractCodeFromMessage,
+        projects,
+        currentProjectId,
+        createProject,
+        switchProject,
+        deleteProject,
+        clearCurrentProject,
+        getCurrentProject,
       }}
     >
       {children}

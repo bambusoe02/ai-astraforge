@@ -4,6 +4,7 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import { AgentChat } from "./agent-chat";
 import { ProjectStatus } from "./project-status";
+import { Projects } from "./projects";
 import { Sidebar } from "./dashboard/sidebar";
 import { TopBanner } from "./dashboard/top-banner";
 import { SkeletonLoader } from "./skeleton-loader";
@@ -22,7 +23,7 @@ const CodeEditor = dynamic(() => import("./code-editor").then(mod => ({ default:
 });
 
 export function Dashboard() {
-  const [activeView, setActiveView] = useState<"chat" | "editor" | "status">("chat");
+  const [activeView, setActiveView] = useState<"chat" | "editor" | "status" | "projects">("chat");
 
   return (
     <div className="min-h-screen relative">
@@ -44,6 +45,7 @@ export function Dashboard() {
           <div className="h-full backdrop-blur-xl bg-gray-900/80 rounded-xl lg:rounded-2xl border border-gray-800 shadow-2xl overflow-hidden">
             {activeView === "chat" && <AgentChat />}
             {activeView === "editor" && <CodeEditor />}
+            {activeView === "projects" && <Projects />}
             {activeView === "status" && <ProjectStatus />}
           </div>
         </main>

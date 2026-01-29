@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquare, Code, BarChart3, Menu, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { MessageSquare, Code, BarChart3, FolderOpen, Menu, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { track } from "@vercel/analytics";
 import { AgentStatus } from "../agent-status";
 
 interface SidebarProps {
-  activeView: "chat" | "editor" | "status";
-  onViewChange: (view: "chat" | "editor" | "status") => void;
+  activeView: "chat" | "editor" | "status" | "projects";
+  onViewChange: (view: "chat" | "editor" | "status" | "projects") => void;
 }
 
 const navItems = [
@@ -25,6 +25,13 @@ const navItems = [
     icon: Code,
     gradient: "from-blue-500 to-cyan-500",
     tooltip: "Multi-platform code editor"
+  },
+  { 
+    id: "projects" as const, 
+    label: "Projects", 
+    icon: FolderOpen,
+    gradient: "from-orange-500 to-red-500",
+    tooltip: "Manage your projects"
   },
   { 
     id: "status" as const, 
@@ -207,6 +214,7 @@ export function Sidebar({ activeView, onViewChange }: SidebarProps) {
                   const gradientClass = isActive 
                     ? item.gradient === "from-purple-500 to-pink-500" ? "bg-gradient-to-r from-purple-500 to-pink-500"
                     : item.gradient === "from-blue-500 to-cyan-500" ? "bg-gradient-to-r from-blue-500 to-cyan-500"
+                    : item.gradient === "from-orange-500 to-red-500" ? "bg-gradient-to-r from-orange-500 to-red-500"
                     : "bg-gradient-to-r from-green-500 to-emerald-500"
                     : "";
                   return (
