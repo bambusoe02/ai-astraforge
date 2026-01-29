@@ -98,3 +98,6 @@ ENV/
 # Turbo
 .turbo/
 *.tsbuildinfo
+
+# Audit reports (local only)
+PROJECT_AUDIT_REPORT.md

@@ -1,104 +1,103 @@
-# Jak naprawić problem z cache w Next.js
+# How to Fix Next.js Cache Issues
 
-## Problem: Widzisz starą wersję po update
+## Problem: You See Old Version After Update
 
-Next.js cache'uje komponenty, obrazy i buildy. Jeśli widzisz starą wersję, wykonaj te kroki:
+Next.js caches components, images, and builds. If you see an old version, follow these steps:
 
-## Rozwiązanie lokalne
+## Local Solution
 
-### 1. Wyczyść cache Next.js
+### 1. Clear Next.js Cache
 ```bash
 cd apps/web
 npm run clean
-# lub ręcznie:
+# or manually:
 rm -rf .next .turbo node_modules/.cache
 ```
 
-### 2. Uruchom dev server z czystym cache
+### 2. Run Dev Server with Clean Cache
 ```bash
 npm run dev:clean
 ```
 
-### 3. Wyczyść cache przeglądarki
-- **Chrome/Edge**: `Ctrl+Shift+Delete` (Windows) lub `Cmd+Shift+Delete` (Mac)
-- Wybierz "Cached images and files"
-- Kliknij "Clear data"
+### 3. Clear Browser Cache
+- **Chrome/Edge**: `Ctrl+Shift+Delete` (Windows) or `Cmd+Shift+Delete` (Mac)
+- Select "Cached images and files"
+- Click "Clear data"
 
-### 4. Hard refresh w przeglądarce
-- **Windows/Linux**: `Ctrl + F5` lub `Ctrl + Shift + R`
+### 4. Hard Refresh in Browser
+- **Windows/Linux**: `Ctrl + F5` or `Ctrl + Shift + R`
 - **Mac**: `Cmd + Shift + R`
 
-## Rozwiązanie dla Vercel (produkcja)
+## Solution for Vercel (Production)
 
-### 1. Wyczyść Vercel Build Cache
-1. Idź do Vercel Dashboard
+### 1. Clear Vercel Build Cache
+1. Go to Vercel Dashboard
 2. Project Settings → General
-3. Scroll do "Build & Development Settings"
-4. Kliknij "Clear Build Cache"
+3. Scroll to "Build & Development Settings"
+4. Click "Clear Build Cache"
 5. Redeploy project
 
-### 2. Force redeploy
+### 2. Force Redeploy
 ```bash
 git commit --allow-empty -m "Force redeploy"
 git push
 ```
 
-### 3. Sprawdź czy obrazy się zaktualizowały
-- Otwórz DevTools (F12)
+### 3. Check if Images Updated
+- Open DevTools (F12)
 - Network tab
-- Odśwież stronę z `Disable cache` zaznaczonym
-- Sprawdź czy obrazy mają nowe timestamps
+- Refresh page with `Disable cache` checked
+- Check if images have new timestamps
 
-## Debugowanie
+## Debugging
 
-### Sprawdź czy pliki są zaktualizowane
+### Check if Files Are Updated
 ```bash
-# Sprawdź datę modyfikacji screenshots
+# Check screenshot modification dates
 ls -la apps/web/public/screenshots/
 
-# Sprawdź czy komponenty są zaktualizowane
+# Check if components are updated
 grep -r "placeholder" apps/web/components/
 ```
 
-### Sprawdź cache Next.js
+### Check Next.js Cache
 ```bash
-# Zobacz co jest w cache
+# See what's in cache
 ls -la apps/web/.next/cache/
 ```
 
-### Sprawdź czy build używa nowych plików
+### Check if Build Uses New Files
 ```bash
 cd apps/web
 npm run build
-# Sprawdź output - powinien pokazać nowe pliki
+# Check output - should show new files
 ```
 
-## Najczęstsze przyczyny
+## Most Common Causes
 
-1. **Browser cache** - Najczęstsza przyczyna
-2. **Next.js .next folder** - Stary build
-3. **Vercel cache** - Stary deployment
-4. **CDN cache** - Jeśli używasz CDN
-5. **Service Worker** - Jeśli masz PWA
+1. **Browser cache** - Most common cause
+2. **Next.js .next folder** - Old build
+3. **Vercel cache** - Old deployment
+4. **CDN cache** - If using CDN
+5. **Service Worker** - If you have PWA
 
-## Automatyczne czyszczenie
+## Automatic Cleanup
 
-Dodaj do `.gitignore` (już jest):
+Already added to `.gitignore`:
 ```
 .next/
 .turbo/
 node_modules/.cache/
 ```
 
-## Sprawdź czy działa
+## Verify It Works
 
-Po wyczyszczeniu cache:
-1. Otwórz DevTools → Network
-2. Odśwież stronę
-3. Sprawdź czy obrazy mają nowe timestamps
-4. Sprawdź czy komponenty są zaktualizowane
+After clearing cache:
+1. Open DevTools → Network
+2. Refresh page
+3. Check if images have new timestamps
+4. Check if components are updated
 
 ---
 
-**Tip**: Jeśli nadal widzisz starą wersję, użyj incognito/private mode w przeglądarce.
-
+**Tip**: If you still see old version, use incognito/private mode in browser.
