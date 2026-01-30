@@ -2,6 +2,9 @@ import { Metadata } from "next";
 import { Dashboard } from "../../components/dashboard";
 import { AppProvider } from "../../lib/context/app-context";
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: "Dashboard",
   description: "AstraForge Dashboard - Interact with AI agents, generate code, and monitor project status",

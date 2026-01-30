@@ -43,14 +43,17 @@ Generate a complete, working component or page.`,
 Generate a complete, working endpoint or module.`,
   
   mobile: `Generate production-ready React Native code with TypeScript. Include:
-- Proper TypeScript types
-- React Native best practices
-- Error handling
-- Loading states
-- Responsive design
+    - Proper TypeScript types
+    - React Native best practices
+    - Error handling
+    - Loading states
+    - Responsive design
 
 Generate a complete, working screen or component.`,
 };
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function POST(request: NextRequest) {
   // Determine language based on platform (defined outside try-catch for error handling)
