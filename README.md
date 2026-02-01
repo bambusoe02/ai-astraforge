@@ -4,11 +4,13 @@
 
 *AI factory used by 100+ startups - Build full-stack apps across platforms in minutes*
 
+[![CI](https://github.com/bambusoe02/ai-astraforge/workflows/CI/badge.svg)](https://github.com/bambusoe02/ai-astraforge/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Next.js 14](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-green)](https://fastapi.tiangolo.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4-blue)](https://www.typescriptlang.org/)
 [![Turborepo](https://img.shields.io/badge/Turborepo-2.0-purple)](https://turbo.build/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 [🌐 Live Demo](https://ai-astraforge.vercel.app) • [📚 Documentation](#) • [💬 Discord](#)
 
@@ -170,3 +172,7 @@ Built with:
 - [Turborepo](https://turbo.build/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [shadcn/ui](https://ui.shadcn.com/)
+
+## 🔑 Keywords
+
+**AI agents**, **monorepo**, **Turborepo**, **Next.js**, **FastAPI**, **React Native**, **Chrome Extension**, **LangGraph**, **multi-agent orchestration**, **production-ready**, **enterprise-grade**, **code generation**, **full-stack development**, **cross-platform**, **TypeScript**, **Python**, **AI-powered development**, **automated code generation**, **CI/CD**, **Docker**, **Vercel deployment**
